@@ -2,11 +2,11 @@ variant: fcos
 version: 1.3.0
 passwd:
   users:
-    - name: su_user
+    - name: rancher
       # 123
       password_hash: $y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93
-      home_dir: /home/su_user
-      groups:
+      home_dir: /home/rancher
+      groups: # adds 'rancher' user to root group
         - docker
         - sudo
         - wheel
@@ -15,46 +15,82 @@ systemd:
   units:
     - name: serial-getty@ttyS0.service
       dropins:
-      - name: autologin-core.conf
+      - name: autologin-rancher.conf
         contents: |
           [Service]
           # Override Execstart in main unit
           ExecStart=
           # Add new Execstart with `-` prefix to ignore failure`
-          ExecStart=-/usr/sbin/agetty --autologin su_user --noclear %I $TERM
+          ExecStart=-/usr/sbin/agetty --autologin rancher --noclear %I $TERM
     - name: podman.service
       enabled: false
     - name: docker.service
       enabled: true
     - name: zincati.service
       enabled: false
-    - name: rpm-ostree-countme.timer
+    - name: rpm-ostree-countme.timer # telemetry
       enabled: false
       mask: true
-    - name: postinstall.service
+    - name: postinstall.service # what it means is that it will boot up the VM, then start installing packages, and then reboots
       enabled: true
       contents: |
         [Unit]
         Description=Post Installation
         After=network-online.target
         Wants=network-online.target
-
         [Service]
         TimeoutStartSec=0
         ExecStart=/bin/bash -c "/bin/rpm-ostree install perl perl-core open-vm-tools tree nano git tig nfs-utils lsscsi && reboot || /bin/true"
-
         [Install]
         WantedBy=multi-user.target
 storage:
+  disks:
+    - device: /dev/sda4
+      wipe_table: false
+      partitions:
+      - number: 4
+        label: root
+        size_mib: 8192
+        resize: true
+      - size_mib: 20000
+        label: var
+  filesystems:
+    - path: /var
+      device: /dev/disk/by-partlabel/var
+      format: xfs
+      with_mount_unit: true
+  directories:
+    - path: /etc/yum.repos.d # remove that directory
+      override: true
+      mode: 600
+      user: root
+      group: root
   files:
-
-# Remove Files for dnf sources
-
+    - path: /etc/yum.repos.d/onprem-fedora.repo
+      mode: 0644
+      contents:
+        inline: |
+          [fedora]
+          name=On Prem Fedora OS
+          failovermethod=priority
+          baseurl=https://ftp.fau.de/fedora/linux/releases/34/Everything/x86_64/os/
+          enabled=1
+          gpgcheck=0
+          metadata_expire=2d
+          skip_if_unavailable=False
+          [fedora-updates]
+          name=On Prem Fedora Updates
+          failovermethod=priority
+          baseurl=https://ftp.fau.de/fedora/linux/updates/34/Everything/x86_64/
+          enabled=1
+          gpgcheck=0
+          metadata_expire=2d
+          skip_if_unavailable=False
     - path: /etc/hostname
       mode: 0644
       contents:
         inline: |
-          alm-01
+          host-01
     - path: /etc/sysctl.d/20-silence-audit.conf
       mode: 0644
       contents:
@@ -62,7 +98,7 @@ storage:
           # Raise console message logging level from DEBUG (7) to WARNING (4)
           # to hide audit messages from the interactive console
           kernel.printk=4
-    - path: /etc/systemd/network/50-flannel.link
+    - path: /etc/systemd/network/50-flannel.link # rancher fixes
       mode: 0644
       contents:
         inline: |

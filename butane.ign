@@ -10,8 +10,8 @@
           "sudo",
           "wheel"
         ],
-        "homeDir": "/home/su_user",
-        "name": "su_user",
+        "homeDir": "/home/rancher",
+        "name": "rancher",
         "passwordHash": "$y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93",
         "shell": "/bin/bash"
       }
@@ -22,7 +22,7 @@
       {
         "path": "/etc/hostname",
         "contents": {
-          "source": "data:,alm-01%0A"
+          "source": "data:,host-01%0A"
         },
         "mode": 420
       },
@@ -47,8 +47,8 @@
       {
         "dropins": [
           {
-            "contents": "[Service]\n# Override Execstart in main unit\nExecStart=\n# Add new Execstart with `-` prefix to ignore failure`\nExecStart=-/usr/sbin/agetty --autologin su_user --noclear %I $TERM\n",
-            "name": "autologin-core.conf"
+            "contents": "[Service]\n# Override Execstart in main unit\nExecStart=\n# Add new Execstart with `-` prefix to ignore failure`\nExecStart=-/usr/sbin/agetty --autologin rancher --noclear %I $TERM\n",
+            "name": "autologin-rancher.conf"
           }
         ],
         "name": "serial-getty@ttyS0.service"
