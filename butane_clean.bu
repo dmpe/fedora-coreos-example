@@ -18,59 +18,9 @@ systemd:
       - name: autologin-rancher.conf
         contents: |
           [Service]
-          # Override Execstart in main unit
           ExecStart=
-          # Add new Execstart with `-` prefix to ignore failure`
           ExecStart=-/usr/sbin/agetty --autologin rancher --noclear %I $TERM
-    - name: podman.service
-      enabled: false
-    - name: docker.service
-      enabled: true
-    # currently not working
-    #- name: zincati.service
-    #  enabled: false
-    - name: rpm-ostree-countme.timer # telemetry
-      enabled: false
-      mask: true
-    - name: postinstall.service # what it means is that it will boot up the VM, then start installing packages, and then reboots, frequent problems with perl perl-core
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Post Installation
-        After=network-online.target
-        Wants=network-online.target
-        [Service]
-        TimeoutStartSec=0
-        ExecStart=/bin/bash -c "/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig nfs-utils lsscsi && reboot || /bin/true"
-        [Install]
-        WantedBy=multi-user.target
-    - name: nfs-utils.service
-      enabled: true
-    - name: firewalld.service 
-      enabled: true
-    - name: iscsid.service
-      enabled: true
-    - name: multipathd.service
-      enabled: true
-    - name: iscsi.service
-      enabled: true
 storage:
-  # still not working
-  #disks:
-  #  - device: /dev/sda4
-  #    wipe_table: false
-  #    partitions:
-  #    - number: 4
-  #      label: root
-  #      size_mib: 8192
-  #      resize: true
-  #    - size_mib: 20000
-  #      label: var
-  #filesystems:
-  #  - path: /var
-  #    device: /dev/disk/by-partlabel/var
-  #    format: xfs
-  #    with_mount_unit: true
   directories:
     - path: /etc/yum.repos.d # remove that directory
       overwrite: true
