@@ -2,137 +2,23 @@
 # please consult the documentation on how to configure custom RKE images.
 nodes:
 - address: 192.168.226.134
-  port: "22"
   role:
   - controlplane
   - etcd
-  user: "rancher"
-  docker_socket: "/run/docker.sock"
-  ssh_key: |-
-    -----BEGIN OPENSSH PRIVATE KEY-----
-    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
-    IMpNvLwUfZI5EAAAAFam1Aam0BAgMEBQY=
-    -----END OPENSSH PRIVATE KEY-----
+  user: rancher
+  docker_socket: /run/docker.sock
+  ssh_key_path: /home/jm/.ssh/id_ecdsa
 network:
   plugin: canal
-  options: {}
-  mtu: 0
-  node_selector: {}
-  update_strategy: null
-  tolerations: []
+  options:
+    canal_flex_volume_plugin_dir: /opt/kubernetes/kubelet-plugins/volume/exec/nodeagent~uds
+    flannel_backend_type: vxlan
+services:
+  kube-controller:
+    extra_args:
+      flex-volume-plugin-dir: /opt/kubernetes/kubelet-plugins/volume/exec/
 authentication:
   strategy: x509
-system_images:
-  etcd: rancher/mirrored-coreos-etcd:v3.4.15-rancher1
-  alpine: rancher/rke-tools:v0.1.76
-  nginx_proxy: rancher/rke-tools:v0.1.76
-  cert_downloader: rancher/rke-tools:v0.1.76
-  kubernetes_services_sidecar: rancher/rke-tools:v0.1.76
-  kubedns: rancher/mirrored-k8s-dns-kube-dns:1.15.10
-  dnsmasq: rancher/mirrored-k8s-dns-dnsmasq-nanny:1.15.10
-  kubedns_sidecar: rancher/mirrored-k8s-dns-sidecar:1.15.10
-  kubedns_autoscaler: rancher/mirrored-cluster-proportional-autoscaler:1.8.1
-  coredns: rancher/mirrored-coredns-coredns:1.8.0
-  coredns_autoscaler: rancher/mirrored-cluster-proportional-autoscaler:1.8.1
-  nodelocal: rancher/mirrored-k8s-dns-node-cache:1.15.13
-  kubernetes: rancher/hyperkube:v1.20.7-rancher1
-  flannel: rancher/coreos-flannel:v0.13.0-rancher1
-  flannel_cni: rancher/flannel-cni:v0.3.0-rancher6
-  calico_node: rancher/mirrored-calico-node:v3.17.2
-  calico_cni: rancher/mirrored-calico-cni:v3.17.2
-  calico_controllers: rancher/mirrored-calico-kube-controllers:v3.17.2
-  calico_ctl: rancher/mirrored-calico-ctl:v3.17.2
-  calico_flexvol: rancher/mirrored-calico-pod2daemon-flexvol:v3.17.2
-  canal_node: rancher/mirrored-calico-node:v3.17.2
-  canal_cni: rancher/mirrored-calico-cni:v3.17.2
-  canal_controllers: rancher/mirrored-calico-kube-controllers:v3.17.2
-  canal_flannel: rancher/coreos-flannel:v0.13.0-rancher1
-  canal_flexvol: rancher/mirrored-calico-pod2daemon-flexvol:v3.17.2
-  weave_node: weaveworks/weave-kube:2.8.1
-  weave_cni: weaveworks/weave-npc:2.8.1
-  pod_infra_container: rancher/mirrored-pause:3.2
-  ingress: rancher/nginx-ingress-controller:nginx-0.43.0-rancher3
-  ingress_backend: rancher/mirrored-nginx-ingress-controller-defaultbackend:1.5-rancher1
-  metrics_server: rancher/mirrored-metrics-server:v0.4.1
-  windows_pod_infra_container: rancher/kubelet-pause:v0.1.6
-  aci_cni_deploy_container: noiro/cnideploy:5.1.1.0.1ae238a
-  aci_host_container: noiro/aci-containers-host:5.1.1.0.1ae238a
-  aci_opflex_container: noiro/opflex:5.1.1.0.1ae238a
-  aci_mcast_container: noiro/opflex:5.1.1.0.1ae238a
-  aci_ovs_container: noiro/openvswitch:5.1.1.0.1ae238a
-  aci_controller_container: noiro/aci-containers-controller:5.1.1.0.1ae238a
-  aci_gbp_server_container: noiro/gbp-server:5.1.1.0.1ae238a
-  aci_opflex_server_container: noiro/opflex-server:5.1.1.0.1ae238a
-ssh_agent_auth: true
 authorization:
   mode: rbac
-  options: {}
 ignore_docker_version: true
-ingress:
-  provider: nginx
-  node_selector:
-    app: ingress
-addons: |-
-    ---
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      name: my-nginx
-      namespace: default
-    spec:
-      containers:
-      - name: my-nginx
-        image: nginx
-        ports:
-        - containerPort: 80
-cluster_name: ""
-prefix_path: ""
-win_prefix_path: ""
-addon_job_timeout: 0
-monitoring:
-  provider: "metrics-server"
-  options: {}
-  node_selector: {}
-  update_strategy: null
-  replicas: null
-  tolerations: []
-  metrics_server_priority_class_name: ""
-restore:
-  restore: false
-  snapshot_name: ""
-rotate_encryption_key: false
-dns: null

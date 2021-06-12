@@ -4,7 +4,7 @@ passwd:
   users:
     - name: rancher
       # 123
-      password_hash: $y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93
+      # password_hash: $y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93
       home_dir: /home/rancher
       groups: # adds 'rancher' user to root group
         - docker
@@ -12,8 +12,7 @@ passwd:
         - wheel
       shell: /bin/bash
       ssh_authorized_keys: 
-        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMc4ZtbhzWdIpGw7dAqAKWDCBPIG90KG9sAx5wuFd0pr jm@jm
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuLxsBsAx2QQP4XiPpdsbnbEIxuu2sS1aAXzw3eNYmC8eY+pR2ek5DDu+XwmYw8Jd26ayAeFhEj+QVXaG6nx/XLKmKUWFvjljPwkqT7MJq+3HdjdsPJ/GWabxxVu9rqB/cRiropX7HB7csDoKYQzdizxIN1qy4YyFJueLl/VXhx1ribsIo40LivAMSh+cuGrSzOTBPEsxk1RFsjTQNGkjhByPfNeIUkLRn8bKEeHy8rREfo9EypJdemyyL8phKXFijDruogXuJV2Qr0KJbstJuH3UZAagzOTSG6oY5cQ/RRx4pLL1YPfQ/8YkFNcuiL05YpLDvrYOPOL2SAcTQMjDOZayaLot+qQCqisuokgO9sqOwUIcx4XhubQvc2+puYmzIi+CZYIT5/62tOBpT+qBm/2bD0mEQKfpgodCy/vDSlVp0eqKA9K1UQ5VxbHrEJISTdcWy5Kg655KH90jm//HA54OQIIWkLHwbw7va0YmfF+9xgOYphTu5KlWPJVSv/Fc= jm@jm
+        - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHp71mV0oIFWoxuAQn4172WHe8j5WSqVgPjzqocwh+2HpkWr58Iss/cNu7aCuDEmpu5tMI0mkpY+7ltQoUz6V2c= jm@jm
 systemd:
   units:
     - name: podman.service
@@ -179,11 +178,6 @@ storage:
           OriginalName=flannel*
           [Link]
           MACAddressPolicy=none
-    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
-      mode: 0644
-      contents:
-        inline: |
-          PasswordAuthentication yes
     - path: /home/rancher/rancher.sh
       mode: 0775
       contents:

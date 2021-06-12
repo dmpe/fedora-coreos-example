@@ -12,9 +12,8 @@
         ],
         "homeDir": "/home/rancher",
         "name": "rancher",
-        "passwordHash": "$y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93",
         "sshAuthorizedKeys": [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyOrTl3ywl/WNQW2ag1G4JZBxewcMwZHYmCvkXF9tYY"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHp71mV0oIFWoxuAQn4172WHe8j5WSqVgPjzqocwh+2HpkWr58Iss/cNu7aCuDEmpu5tMI0mkpY+7ltQoUz6V2c= jm@jm"
         ],
         "shell": "/bin/bash"
       }
@@ -51,6 +50,13 @@
         "mode": 420
       },
       {
+        "path": "/etc/systemd/zram-generator.conf",
+        "contents": {
+          "source": "data:;base64,IyBUaGlzIGNvbmZpZyBmaWxlIGVuYWJsZXMgYSAvZGV2L3pyYW0wIGRldmljZSB3aXRoIHRoZSBkZWZhdWx0IHNldHRpbmdzClt6cmFtMF0K"
+        },
+        "mode": 420
+      },
+      {
         "path": "/etc/systemd/network/50-flannel.link",
         "contents": {
           "source": "data:,%5BMatch%5D%0AOriginalName%3Dflannel*%0A%5BLink%5D%0AMACAddressPolicy%3Dnone%0A"
@@ -58,17 +64,10 @@
         "mode": 420
       },
       {
-        "path": "/etc/ssh/sshd_config.d/20-enable-passwords.conf",
-        "contents": {
-          "source": "data:,PasswordAuthentication%20yes%0A"
-        },
-        "mode": 420
-      },
-      {
         "path": "/home/rancher/rancher.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUTesaMRCH7/9PMaUH+8Js4u7WdQ8exLbXFin0Ii0xGXFKNglJVrH44YtsPdcULwNh5nkyvxzy+pXYsxN7lY4vL2k0HhIZQIZZEj92b5w3VCVKib2rklZu97Z6J3ZzWMGg3KismIGgrAUnnXiqptLeHSbZEFQ+3o6ASE7tLQHimfPx5zDazLeugcvfmw8c6aysRT0YQAwUB+XIZUBUxmDwMa/qWmQdHp9fyrL5tm3KgLrpFsVEX0qUxlgU51i2XS1GU0D0si/MMZf1B1mOtGVII6WU2NTdovt/8PYS/yQNR9J3RRwtAYdTCwe2mSJ8/rL9vt5+hL4H9KCV5feAv2C92Xz6+u2Jbn7I/exdn71fJOuVmVoxDOhTjkTALmVlLQSKU0HtI8H1CjmOdP+yLinToLOFlH2A3+y0ylwliifW9CcAAP//DOZ/f+MEAAA="
+          "source": "data:;base64,H4sIAAAAAAAC/6yUT28TMRDF7/0UgziUP5r1drMk3UMPVYErqELiEoEce6IMeO3VzGyron54FIVcuBCjXEay5v2e3/PBL1+4DWe38bq7uNA5FlCKgAyX6r6tX+USqVFS5ZIbDT6vXzdv3PoKbmD0efbJXYIjC441KB9mbELJ24PZOHnb7Y+ASNlvEgHiI9vu+zgn4/02wtOfm7cs9OhTwjBGQJxIRp8pGyD6GHEqYjdd5yxMp+uv2zp93y/qgG6xWlYTQy1RW2NZ3eO6X3VujhXE0A6VPa7a7l1bj/R1yKJt2xYX3Wq5+n9w/xL/JCMLhaOFzImAp4cetpyMBD5+uv96e/8ehgGwQPCJ3wL+gNu7uw+fv5zRm0/yPnfWc+cTSsXHw0qmEYuaEAFnNZ8STCSHgaEIwfMzmMx0/LKe1GgMlkCtTPCLc/DGjZI8cKC/NUJqXgxiCT9JjqrfAQAA//8dMohdCQUAAA=="
         },
         "mode": 509
       }
