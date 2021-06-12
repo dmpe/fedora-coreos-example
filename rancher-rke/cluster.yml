@@ -6,8 +6,8 @@ nodes:
   - controlplane
   - etcd
   user: rancher
-  docker_socket: /run/docker.sock
   ssh_key_path: /home/jm/.ssh/id_ecdsa
+  ssh_cert_path: /home/jm/.ssh/id_ecdsa.pub
 network:
   plugin: canal
   options:

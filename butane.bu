@@ -65,6 +65,14 @@ storage:
     - path: /etc/yum.repos.d # remove that directory
       overwrite: true
   files:
+    - path: /etc/crypto-policies/back-ends/opensshserver.config 
+      mode: 0644
+      contents: 
+        inline: |
+          https://github.com/rancher/rke/issues/1417#issuecomment-508074136
+un 12 19:50:43 fcos-node01 sshd[3294]: userauth_pubkey: key type ssh-rsa not in PubkeyAcceptedAlgorithms [preauth]
+Jun 12 19:50:43 fcos-node01 sshd[3294]: Connection closed by authenticating user rancher 192.168.226.128 port 44102 [preauth]
+
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
       contents: # these are not enough to install perl|perl-core
