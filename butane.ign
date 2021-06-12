@@ -13,6 +13,9 @@
         "homeDir": "/home/rancher",
         "name": "rancher",
         "passwordHash": "$y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93",
+        "sshAuthorizedKeys": [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyOrTl3ywl/WNQW2ag1G4JZBxewcMwZHYmCvkXF9tYY"
+        ],
         "shell": "/bin/bash"
       }
     ]
@@ -29,7 +32,7 @@
         "path": "/etc/yum.repos.d/onprem-fedora.repo",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6zPzWrDMBAE4Luewi/QbH9CKAUdm2sKpadSzCYa2SKyJFYr47x9aZOjb+11l5nh+/RwWfjLJJ5gD6l7E0zd/vfYHd6N5xDzDJmgY3a2SMgS9GKOXNEk2lG11Bcir2XjuW0c6NpIMaS2kCCCKyo9bel1hlx0DGmg5XnX77aUKxkkPkY4+2CGMpxGnM723kxQdqzcYylBYB+dqedQ+uD7lnjmEH9Cds+xwtwMd604VtR1y8f1+WfQbWTd8w+Y7wAAAP//rDiDd5EBAAA="
+          "source": "data:;base64,H4sIAAAAAAAC/9yWX2vbMBTF3/UpBC17U67zskFAjD20fRiFMrqHUUZQrGtbs2wJ/cmSbz8cu7bTZSwJ8f70zVykc6/OjyPrKUNpnGCVkVEL95XUokJ+uyvS+7ZIrx1qFB7X6Cij1yvhUbi0IFfNV3SaFyHYBYA032tthJzhRlRWI9i4grYBaFXHDXRCHkaS0LWBXhiMB1JhEFrV5U7cLwAq5ZxxftYKWme+YRpmxuXwvPS9Q2v4/onYqNObRpwP82MtVholT0hqYh0q5PNdWymCWOLGKof8nSSN6jK3eVpgWvKEhK1F7mxF+tq8+SxxyzOlcQEAGFKwpQJnK5bbHD493LO7hzv28eYL6+YbzcWGkXyp7FJly1iLtVC6mY/fCu2RPEUrRUDPmnVqjfuofoGIMvq53UY/tNvImFlj656d7EWTA2Z3PMcAB3C9pT8b+bb460Y+uogkNT7weZIkCb2iEjMRdaDK06Y0mHxOHgazz0hG1/g3wTg/Fc8H6+Rln4/sxIAcA/EA+z8YkIA+qDo/l+Ej+nABkN0UkwN9cdrXy/PYC29CfjdrdNtQ7MoTIHx16E78R13o2pyIUn9zHoNp/l9gavcdRelSj72DcC7x3jsRyj/7zvsRAAD//xCRb86SCwAA"
         },
         "mode": 420
       },
@@ -50,22 +53,66 @@
       {
         "path": "/etc/systemd/network/50-flannel.link",
         "contents": {
-          "source": "data:,%5BMatch%5D%0AOriginalName%3Dflannel*%0A%5BLink%5D%0AMACAddressPolicy%3Dnone"
+          "source": "data:,%5BMatch%5D%0AOriginalName%3Dflannel*%0A%5BLink%5D%0AMACAddressPolicy%3Dnone%0A"
         },
         "mode": 420
+      },
+      {
+        "path": "/etc/ssh/sshd_config.d/20-enable-passwords.conf",
+        "contents": {
+          "source": "data:,PasswordAuthentication%20yes%0A"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/home/rancher/rancher.sh",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/6yUTesaMRCH7/9PMaUH+8Js4u7WdQ8exLbXFin0Ii0xGXFKNglJVrH44YtsPdcULwNh5nkyvxzy+pXYsxN7lY4vL2k0HhIZQIZZEj92b5w3VCVKib2rklZu97Z6J3ZzWMGg3KismIGgrAUnnXiqptLeHSbZEFQ+3o6ASE7tLQHimfPx5zDazLeugcvfmw8c6aysRT0YQAwUB+XIZUBUxmDwMa/qWmQdHp9fyrL5tm3KgLrpFsVEX0qUxlgU51i2XS1GU0D0si/MMZf1B1mOtGVII6WU2NTdovt/8PYS/yQNR9J3RRwtAYdTCwe2mSJ8/rL9vt5+hL4H9KCV5feAv2C92Xz6+u2Jbn7I/exdn71fJOuVmVoxDOhTjkTALmVlLQSKU0HtI8H1CjmOdP+yLinToLOFlH2A3+y0ylwliifW9CcAAP//DOZ/f+MEAAA="
+        },
+        "mode": 509
       }
     ]
   },
   "systemd": {
     "units": [
       {
-        "dropins": [
-          {
-            "contents": "[Service]\nExecStart=\nExecStart=-/usr/sbin/agetty --autologin rancher --noclear %I $TERM\n",
-            "name": "autologin-rancher.conf"
-          }
-        ],
-        "name": "serial-getty@ttyS0.service"
+        "enabled": false,
+        "name": "podman.service"
+      },
+      {
+        "enabled": true,
+        "name": "docker.service"
+      },
+      {
+        "enabled": false,
+        "mask": true,
+        "name": "rpm-ostree-countme.timer"
+      },
+      {
+        "contents": "[Unit]\nDescription=Post Installation\nAfter=network-online.target\nWants=network-online.target\n[Service]\nTimeoutStartSec=0\nExecStart=/bin/bash -c \"/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig nfs-utils lsscsi \u0026\u0026 reboot || /bin/true\"\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "postinstall.service"
+      },
+      {
+        "enabled": true,
+        "name": "nfs-utils.service"
+      },
+      {
+        "enabled": true,
+        "name": "firewalld.service"
+      },
+      {
+        "enabled": true,
+        "name": "iscsid.service"
+      },
+      {
+        "enabled": true,
+        "name": "multipathd.service"
+      },
+      {
+        "enabled": true,
+        "name": "iscsi.service"
       }
     ]
   }
