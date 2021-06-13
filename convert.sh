@@ -2,7 +2,8 @@
 
 butane_file=$1
 
-FEDORA_VERSION="34.20210529.1.0-vmware.x86_64.ova"
+# FEDORA_VERSION="34.20210529.1.0-vmware.x86_64.ova"
+FEDORA_VERSION="33.20210328.3.0-vmware.x86_64.ova"
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
 
@@ -28,13 +29,13 @@ sudo chown -R $USER:$USER $HOME/vmware/$VM_NAME
 vmrun -T ws upgradevm "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
 sed -i 's/rhel7-64/other5xlinux-64/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
-sed -i 's/4096/2048/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
+# sed -i 's/4096/2048/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
 
 vmrun -T ws start "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
-sleep 25
+# sleep 25
 
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rancher@192.168.226.134
+# ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rancher@192.168.226.134
 
 
 #pwsh -c "Install-Module -Name vmxtoolkit -Force -AcceptLicense"

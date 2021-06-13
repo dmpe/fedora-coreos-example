@@ -1,3 +1,4 @@
-ovftools/VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle
+ovftools/VMware-*.bundle
 ova/*
 vmware-root/*
+*.rkestate

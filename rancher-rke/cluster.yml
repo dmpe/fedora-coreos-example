@@ -2,12 +2,13 @@
 # please consult the documentation on how to configure custom RKE images.
 nodes:
 - address: 192.168.226.134
+  internal_address: 192.168.226.134
   role:
   - controlplane
   - etcd
   user: rancher
-  ssh_key_path: /home/jm/.ssh/id_ecdsa
-  ssh_cert_path: /home/jm/.ssh/id_ecdsa.pub
+  ssh_key_path: /home/jm/.ssh/rancher/id_ed255519_3
+  ssh_cert_path: /home/jm/.ssh/rancher/id_ed255519_3.pub
 network:
   plugin: canal
   options:

@@ -10,10 +10,22 @@
           "sudo",
           "wheel"
         ],
+        "homeDir": "/home/core",
+        "name": "core",
+        "passwordHash": "$y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93",
+        "shell": "/bin/bash"
+      },
+      {
+        "groups": [
+          "docker",
+          "sudo",
+          "wheel"
+        ],
         "homeDir": "/home/rancher",
         "name": "rancher",
         "sshAuthorizedKeys": [
-          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHp71mV0oIFWoxuAQn4172WHe8j5WSqVgPjzqocwh+2HpkWr58Iss/cNu7aCuDEmpu5tMI0mkpY+7ltQoUz6V2c= jm@jm"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyOrTl3ywl/WNQW2ag1G4JZBxewcMwZHYmCvkXF9tYY jm@jm2",
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuLxsBsAx2QQP4XiPpdsbnbEIxuu2sS1aAXzw3eNYmC8eY+pR2ek5DDu+XwmYw8Jd26ayAeFhEj+QVXaG6nx/XLKmKUWFvjljPwkqT7MJq+3HdjdsPJ/GWabxxVu9rqB/cRiropX7HB7csDoKYQzdizxIN1qy4YyFJueLl/VXhx1ribsIo40LivAMSh+cuGrSzOTBPEsxk1RFsjTQNGkjhByPfNeIUkLRn8bKEeHy8rREfo9EypJdemyyL8phKXFijDruogXuJV2Qr0KJbstJuH3UZAagzOTSG6oY5cQ/RRx4pLL1YPfQ/8YkFNcuiL05YpLDvrYOPOL2SAcTQMjDOZayaLot+qQCqisuokgO9sqOwUIcx4XhubQvc2+puYmzIi+CZYIT5/62tOBpT+qBm/2bD0mEQKfpgodCy/vDSlVp0eqKA9K1UQ5VxbHrEJISTdcWy5Kg655KH90jm//HA54OQIIWkLHwbw7va0YmfF+9xgOYphTu5KlWPJVSv/Fc= jm@jm"
         ],
         "shell": "/bin/bash"
       }
@@ -50,13 +62,6 @@
         "mode": 420
       },
       {
-        "path": "/etc/systemd/zram-generator.conf",
-        "contents": {
-          "source": "data:;base64,IyBUaGlzIGNvbmZpZyBmaWxlIGVuYWJsZXMgYSAvZGV2L3pyYW0wIGRldmljZSB3aXRoIHRoZSBkZWZhdWx0IHNldHRpbmdzClt6cmFtMF0K"
-        },
-        "mode": 420
-      },
-      {
         "path": "/etc/systemd/network/50-flannel.link",
         "contents": {
           "source": "data:,%5BMatch%5D%0AOriginalName%3Dflannel*%0A%5BLink%5D%0AMACAddressPolicy%3Dnone%0A"
@@ -67,7 +72,7 @@
         "path": "/home/rancher/rancher.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUT28TMRDF7/0UgziUP5r1drMk3UMPVYErqELiEoEce6IMeO3VzGyron54FIVcuBCjXEay5v2e3/PBL1+4DWe38bq7uNA5FlCKgAyX6r6tX+USqVFS5ZIbDT6vXzdv3PoKbmD0efbJXYIjC441KB9mbELJ24PZOHnb7Y+ASNlvEgHiI9vu+zgn4/02wtOfm7cs9OhTwjBGQJxIRp8pGyD6GHEqYjdd5yxMp+uv2zp93y/qgG6xWlYTQy1RW2NZ3eO6X3VujhXE0A6VPa7a7l1bj/R1yKJt2xYX3Wq5+n9w/xL/JCMLhaOFzImAp4cetpyMBD5+uv96e/8ehgGwQPCJ3wL+gNu7uw+fv5zRm0/yPnfWc+cTSsXHw0qmEYuaEAFnNZ8STCSHgaEIwfMzmMx0/LKe1GgMlkCtTPCLc/DGjZI8cKC/NUJqXgxiCT9JjqrfAQAA//8dMohdCQUAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/6yUz2obMRCH73mKKT2kf5jVZr21s4ccQtpeW0KhF9MiS2M8rVYSmtmElDx8MRv3UCi1gi8Dy3zfb2d0mJcvzIaj2VjZnZ3J5BMIeUCGczHf1q9i8tQIiXCKjTgb16+bN2Z9AVcw2jjZYM7BkDrD4oTn6huX4nYOG7PV3f4TECnaTSBAvGfdfR+noLzvenh4+vOWC93bENCNHhAzldFGigqI1nvMqehV1xl1+Xj+sq3j+35RJ3SL1bLaGGqN2jWW1Xtc9qvOTL7CGNqhco+LtnvX1it9nbJo27bFRbdarp4v7l/iv6bnQu4QUaZAwPmuhy0HpQIfP91+vb59D8MAmMDZwG8Bf8D1zc2Hz19OmM1HZZ961lPPVygk6+dWySMm0UIEHEVtCJCpzAVdKgRxKzgpB4HHR9Ay0eF4PYjS6DSAaMrwi6Ozyo1QuWNHfzNPF+lP2L+4QqK26PGgT+4nlQP1OwAA//9+XmYPZAUAAA=="
         },
         "mode": 509
       }
@@ -89,13 +94,9 @@
         "name": "rpm-ostree-countme.timer"
       },
       {
-        "contents": "[Unit]\nDescription=Post Installation\nAfter=network-online.target\nWants=network-online.target\n[Service]\nTimeoutStartSec=0\nExecStart=/bin/bash -c \"/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig nfs-utils lsscsi \u0026\u0026 reboot || /bin/true\"\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Post Installation\nAfter=network-online.target\nWants=network-online.target\n[Service]\nTimeoutStartSec=0\nExecStart=/bin/bash -c \"/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig lsscsi \u0026\u0026 reboot || /bin/true\"\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "postinstall.service"
-      },
-      {
-        "enabled": true,
-        "name": "nfs-utils.service"
       },
       {
         "enabled": true,
