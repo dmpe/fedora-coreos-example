@@ -10,17 +10,6 @@
           "sudo",
           "wheel"
         ],
-        "homeDir": "/home/core",
-        "name": "core",
-        "passwordHash": "$y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93",
-        "shell": "/bin/bash"
-      },
-      {
-        "groups": [
-          "docker",
-          "sudo",
-          "wheel"
-        ],
         "homeDir": "/home/rancher",
         "name": "rancher",
         "sshAuthorizedKeys": [
@@ -43,7 +32,7 @@
         "path": "/etc/yum.repos.d/onprem-fedora.repo",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/9yWX2vbMBTF3/UpBC17U67zskFAjD20fRiFMrqHUUZQrGtbs2wJ/cmSbz8cu7bTZSwJ8f70zVykc6/OjyPrKUNpnGCVkVEL95XUokJ+uyvS+7ZIrx1qFB7X6Cij1yvhUbi0IFfNV3SaFyHYBYA032tthJzhRlRWI9i4grYBaFXHDXRCHkaS0LWBXhiMB1JhEFrV5U7cLwAq5ZxxftYKWme+YRpmxuXwvPS9Q2v4/onYqNObRpwP82MtVholT0hqYh0q5PNdWymCWOLGKof8nSSN6jK3eVpgWvKEhK1F7mxF+tq8+SxxyzOlcQEAGFKwpQJnK5bbHD493LO7hzv28eYL6+YbzcWGkXyp7FJly1iLtVC6mY/fCu2RPEUrRUDPmnVqjfuofoGIMvq53UY/tNvImFlj656d7EWTA2Z3PMcAB3C9pT8b+bb460Y+uogkNT7weZIkCb2iEjMRdaDK06Y0mHxOHgazz0hG1/g3wTg/Fc8H6+Rln4/sxIAcA/EA+z8YkIA+qDo/l+Ej+nABkN0UkwN9cdrXy/PYC29CfjdrdNtQ7MoTIHx16E78R13o2pyIUn9zHoNp/l9gavcdRelSj72DcC7x3jsRyj/7zvsRAAD//xCRb86SCwAA"
+          "source": "data:;base64,H4sIAAAAAAAC/9yW32vbMBDH3/1XCFr2Jp8Dox0FMfbQ9qEUyugeRhlBsS6OZtkS+pEl//1Q7NpOmzEnJPvRp5hD972774dT9DRHoS2nlRZBcfstqXmF7GYTJPdNkJxbVMgdLtESSs5n3CG3+SI5i1/BKrbw3lwBCP2jVpqLFFe8MgrBhBk0BUDJOqygFXIwkIS2DHTCoB0kFXquZF1uxN0VQCWt1daljaCx+jvmPtW2gOejHy0azbYnooNK76I46/vHms8UCpYluQ61r5BNNmUF93yKKyMtskuRRNVpYYp8gXnJssSvDTJrqqSLTeJniWs2lwqvAAB9DqaUYE1FC1PA54d7evtwS++uv9K2v0FftG/JldJM5Xwaar7kUsX+2A1XDpOnYAT36Gg8J5e4jeoXiAglX5o08qlJS4bMoq1bdtIXRXaY3fIcAuzBdZa+NvJi8deNfLQBk1w7zyZZlmXkjAic86A8kY7EUG/yIfvQm33AZrSFf7MYh2/F82CtvOj2Y77ngoyBuIP9H1wQj87LujiU4SM6fwSQbRcnB/pi2rfLc+yFd0J+10u0a7/YhE+A8M2h2/M/6kjX5okodTfnGEyT/wJTkzeK0rEeezvhHOO9tyeUf/edV4YZ2hr79bnrAq8eb4bnJS/QpbnSQaSF1oXCNNcVrEMFcSAHvR5FdUlXHy6mF+8Hngym23agm3ZcNaHz+EtLXKeFKcj4rOhee+o5O/kZAAD//7Md4VGZDAAA"
         },
         "mode": 420
       },
@@ -62,19 +51,33 @@
         "mode": 420
       },
       {
-        "path": "/etc/systemd/network/50-flannel.link",
-        "contents": {
-          "source": "data:,%5BMatch%5D%0AOriginalName%3Dflannel*%0A%5BLink%5D%0AMACAddressPolicy%3Dnone%0A"
-        },
-        "mode": 420
-      },
-      {
         "path": "/home/rancher/rancher.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUz2obMRCH73mKKT2kf5jVZr21s4ccQtpeW0KhF9MiS2M8rVYSmtmElDx8MRv3UCi1gi8Dy3zfb2d0mJcvzIaj2VjZnZ3J5BMIeUCGczHf1q9i8tQIiXCKjTgb16+bN2Z9AVcw2jjZYM7BkDrD4oTn6huX4nYOG7PV3f4TECnaTSBAvGfdfR+noLzvenh4+vOWC93bENCNHhAzldFGigqI1nvMqehV1xl1+Xj+sq3j+35RJ3SL1bLaGGqN2jWW1Xtc9qvOTL7CGNqhco+LtnvX1it9nbJo27bFRbdarp4v7l/iv6bnQu4QUaZAwPmuhy0HpQIfP91+vb59D8MAmMDZwG8Bf8D1zc2Hz19OmM1HZZ961lPPVygk6+dWySMm0UIEHEVtCJCpzAVdKgRxKzgpB4HHR9Ay0eF4PYjS6DSAaMrwi6Ozyo1QuWNHfzNPF+lP2L+4QqK26PGgT+4nlQP1OwAA//9+XmYPZAUAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/6yUX2/aMBTF3/Mp7lSptJscp4GVIq2VKrZKe9gfdZP2goaMfSEejh3ZN6DuYZ99Cgl0LWOQiRcL8O+ce46NfPKCT7TlExGyKAqlcuCLnLlAHhG0DSSMgXk5QUkGKopJlxcGSTsLU+1xKYxRUKA3q4VJ5xFcgZYtckbOmQArLyusg5kmID0DE4IMOopQZg46wZVeIrw5W8/5Y0Q18rwDNze/eFx99jLaQcEN8MzlyL2wMkPPG65ulS/+vgscSa7qjx/9YrUR1wmF0SLA/Lr59WmeGmnUCOwOxuNAwtN4PWP+VBCdwNR5IK8VWoLhl/d1xoAKmIZO4N9HZ9YpjAOGUOUJUtjRefySjy7gGnJhS2F4p86uq6OsVxVLZ6dN4UJQVn0FxtCKiUFgbKkpG+elIV3tKnho7jw8BMK8itqgm5uNA/qFlginp/AM9bhquc3u8Gwi7jd8Bu6we6xxgOU2/K+Qh2bceNVm64NgMlfAWIE+F7a6YcaEUqxwnq7TlJMsDuevknZ8r9dtJ0i7/cvWikFbRdsal617XPX6KS9VC8UgGbTscZGkr5P2kl47STdJkoR10/5l//+F1UnsVSrtUa4tfFn9/YtFD6baEHq4+3T/7fb+LQwGwBxIYfQrYD/gdjh89/nrEb31Qd7HznrsfB6NE2rrPQ3kCviprRSk9zw9dhpYSdqEXdz67TkYVE7O0e+jPiItnZ9/EFbM0Ee/AwAA//+0rK9rEggAAA=="
         },
         "mode": 509
+      },
+      {
+        "path": "/home/rancher/rke2.sh",
+        "contents": {
+          "source": "data:,%23!%2Fbin%2Fbash%0Acurl%20-sfL%20https%3A%2F%2Fget.rke2.io%20%7C%20sudo%20sh%20-%0Asudo%20systemctl%20enable%20rke2-server.service%0Asudo%20systemctl%20start%20rke2-server.service%0A"
+        },
+        "mode": 509
+      },
+      {
+        "path": "/etc/rancher/rke2/config.yaml",
+        "contents": {
+          "source": "data:,selinux%3A%20false%0A"
+        },
+        "mode": 384
+      },
+      {
+        "path": "/etc/NetworkManager/conf.d/rke2-canal.conf",
+        "contents": {
+          "source": "data:,%5Bkeyfile%5D%0Aunmanaged-devices%3Dinterface-name%3Acali*%3Binterface-name%3Aflannel*"
+        },
+        "mode": 384
       }
     ]
   },
@@ -92,27 +95,6 @@
         "enabled": false,
         "mask": true,
         "name": "rpm-ostree-countme.timer"
-      },
-      {
-        "contents": "[Unit]\nDescription=Post Installation\nAfter=network-online.target\nWants=network-online.target\n[Service]\nTimeoutStartSec=0\nExecStart=/bin/bash -c \"/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig lsscsi \u0026\u0026 reboot || /bin/true\"\n[Install]\nWantedBy=multi-user.target\n",
-        "enabled": true,
-        "name": "postinstall.service"
-      },
-      {
-        "enabled": true,
-        "name": "firewalld.service"
-      },
-      {
-        "enabled": true,
-        "name": "iscsid.service"
-      },
-      {
-        "enabled": true,
-        "name": "multipathd.service"
-      },
-      {
-        "enabled": true,
-        "name": "iscsi.service"
       }
     ]
   }

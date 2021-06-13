@@ -2,13 +2,14 @@
 
 butane_file=$1
 
-# FEDORA_VERSION="34.20210529.1.0-vmware.x86_64.ova"
-FEDORA_VERSION="33.20210328.3.0-vmware.x86_64.ova"
+FEDORA_VERSION="34.20210529.1.0-vmware.x86_64.ova"
+# FEDORA_VERSION="33.20210328.3.0-vmware.x86_64.ova"
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
 
 sudo rm -rf $LIBRARY/$VM_NAME || true
 
+sudo rm -rf butane.ign
 butane --pretty --strict < $butane_file > butane.ign
 
 BUTANE_CONFIG=$(cat butane.ign | base64 -w0 -)
@@ -29,7 +30,7 @@ sudo chown -R $USER:$USER $HOME/vmware/$VM_NAME
 vmrun -T ws upgradevm "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
 sed -i 's/rhel7-64/other5xlinux-64/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
-# sed -i 's/4096/2048/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
+sed -i 's/4096/2048/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
 
 vmrun -T ws start "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 

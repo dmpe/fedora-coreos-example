@@ -3,12 +3,13 @@
 nodes:
 - address: 192.168.226.134
   internal_address: 192.168.226.134
+  hostname_override: fcos-node01
   role:
   - controlplane
   - etcd
   user: rancher
-  ssh_key_path: /home/jm/.ssh/rancher/id_ed255519_3
-  ssh_cert_path: /home/jm/.ssh/rancher/id_ed255519_3.pub
+  ssh_key_path: /home/jm/.ssh/rancher/id_rsa2
+  # ssh_cert_path: /home/jm/.ssh/rancher/id_rsa2.pub
 network:
   plugin: canal
   options:
@@ -23,3 +24,5 @@ authentication:
 authorization:
   mode: rbac
 ignore_docker_version: true
+cloud_provider:
+  name: none

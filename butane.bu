@@ -2,15 +2,6 @@ variant: fcos
 version: 1.3.0
 passwd:
   users:
-    - name: core
-      home_dir: /home/core
-      # 123
-      password_hash: $y$j9T$BAsU07smdreKd0DMS64GR.$R6j1Qb8rIyhWR/qcfTqcVGUhvhuRU3SYOIlf9U/mQ93
-      groups: # adds 'core' user to root group
-        - docker
-        - sudo
-        - wheel
-      shell: /bin/bash
     - name: rancher
       home_dir: /home/rancher
       groups: # adds 'rancher' user to root group
@@ -30,26 +21,6 @@ systemd:
     - name: rpm-ostree-countme.timer # telemetry
       enabled: false
       mask: true
-    - name: postinstall.service # what it means is that it will boot up the VM, then start installing packages, and then reboots
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Post Installation
-        After=network-online.target
-        Wants=network-online.target
-        [Service]
-        TimeoutStartSec=0
-        ExecStart=/bin/bash -c "/bin/rpm-ostree install firewalld open-vm-tools tree nano git tig lsscsi && reboot || /bin/true"
-        [Install]
-        WantedBy=multi-user.target
-    - name: firewalld.service 
-      enabled: true
-    - name: iscsid.service
-      enabled: true
-    - name: multipathd.service
-      enabled: true
-    - name: iscsi.service
-      enabled: true
 storage:
   # still not working
   #disks:
@@ -158,6 +129,13 @@ storage:
           gpgcheck=1
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
     - path: /etc/hostname
       mode: 0644
       contents:
@@ -170,28 +148,34 @@ storage:
           # Raise console message logging level from DEBUG (7) to WARNING (4)
           # to hide audit messages from the interactive console
           kernel.printk=4
-    # - path: /etc/systemd/zram-generator.conf
-    #   mode: 0644
-    #   contents:
-    #     inline: |
-    #       # This config file enables a /dev/zram0 device with the default settings
-    #       [zram0]
-    - path: /etc/systemd/network/50-flannel.link # rancher fixes
+    - path: /etc/systemd/zram-generator.conf
       mode: 0644
       contents:
         inline: |
-          [Match]
-          OriginalName=flannel*
-          [Link]
-          MACAddressPolicy=none
-    - path: /home/rancher/rancher.sh
+          # This config file enables a /dev/zram0 device with the default settings
+          [zram0]
+    - path: /home/rancher/setup.sh
       mode: 0775
       contents:
         inline: |
           #!/bin/bash
+          
+          sudo rpm-ostree install kubectl firewalld perl perl-core open-vm-tools tree nano git tig lsscsi
+          
+          echo 'source <(kubectl completion bash)' >>~/.bashrc
+          kubectl completion bash > /home/rancher/kubectl
+          sudo mv /home/rancher/kubectl /etc/bash_completion.d/kubectl
+          echo 'alias k=kubectl' >>~/.bashrc
+          echo 'complete -F __start_kubectl k' >>~/.bashrc
 
+          # for trident CSI
           sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf
           sudo mpathconf --enable --with_multipathd y
+
+          sudo systemctl enable firewalld.service
+          sudo systemctl enable iscsid.service && sudo systemctl restart iscsid.service 
+          sudo systemctl enable multipathd.service && sudo systemctl restart multipathd.service
+          sudo systemctl enable iscsi.service && sudo systemctl restart iscsi.service
 
           sudo firewall-cmd --permanent --add-port=22/tcp
           sudo firewall-cmd --permanent --add-port=80/tcp
@@ -202,6 +186,7 @@ storage:
           sudo firewall-cmd --permanent --add-port=6443/tcp
           sudo firewall-cmd --permanent --add-port=8472/udp
           sudo firewall-cmd --permanent --add-port=9099/tcp
+          sudo firewall-cmd --permanent --add-port=9345/tcp
           sudo firewall-cmd --permanent --add-port=10250/tcp
           sudo firewall-cmd --permanent --add-port=10254/tcp
           sudo firewall-cmd --permanent --add-port=30000-32767/tcp
@@ -212,9 +197,34 @@ storage:
           sudo firewall-cmd --direct --add-rule ipv4 filter FORWARD 99 -o cali+ -j ACCEPT
           sudo firewall-cmd --direct --add-rule ipv4 filter FORWARD 99 -i cali+ -j ACCEPT
           sudo firewall-cmd --reload
-          sudo rpm-ostree install perl perl-core nfs-utils || true
 
           sudo systemctl stop zincati.service
-          sudo systemctl enable nfs-utils.service
-          sudo systemctl restart nfs-utils.service
+          
+          sudo systemctl restart firewalld.service
           sudo systemctl restart docker.service
+          sudo systemctl restart NetworkManager
+          
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          sudo chmod 700 get_helm.sh
+          sudo ./get_helm.sh
+          
+    - path: /home/rancher/rke2.sh #https://docs.rke2.io/install/quickstart.html
+      mode: 0775
+      contents:
+        inline: |
+          #!/bin/bash
+          curl -sfL https://get.rke2.io | sudo sh -
+          sudo systemctl enable rke2-server.service
+          sudo systemctl start rke2-server.service
+    - path: /etc/rancher/rke2/config.yaml
+      mode: 0777
+      contents:
+        inline: |
+          selinux: false
+          write-kubeconfig-mode: "0644"
+    - path: /etc/NetworkManager/conf.d/rke2-canal.conf
+      mode: 0600
+      contents:
+        inline: |
+          [keyfile]
+          unmanaged-devices=interface-name:cali*;interface-name:flannel*
