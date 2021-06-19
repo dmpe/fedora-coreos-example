@@ -1,8 +1,25 @@
 #!/bin/bash
 
 butane_file=$1
+now=$(date +%s)
+download_again=false
 
-FEDORA_VERSION="34.20210529.1.0-vmware.x86_64.ova"
+if [[ $(find ./ova -type f -mtime +10 -print) ]]; then
+	echo "File $filename exists and is older than 100 days. Removing"
+	find ./ova -type f -mtime +10 -name '*.ova' -execdir rm -- '{}' \;   
+	download_again=true
+fi
+
+
+if [[ $download_again == true ]]; then
+    docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s next -C /work/ova/
+fi  
+
+
+coreos_images=$(find ./ova -type f -name "*.ova")
+image_mod_time=$(stat -c "%Y" $coreos_images)
+
+FEDORA_VERSION="$(echo ${coreos_images} | cut -d "-" -f 3,4)"
 # FEDORA_VERSION="33.20210328.3.0-vmware.x86_64.ova"
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
@@ -36,7 +53,7 @@ vmrun -T ws start "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
 # sleep 25
 
-# ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rancher@192.168.226.134
+# ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134
 
 
 #pwsh -c "Install-Module -Name vmxtoolkit -Force -AcceptLicense"

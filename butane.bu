@@ -44,7 +44,7 @@ storage:
   files:
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
-      contents: # these are not enough to install perl|perl-core
+      contents: # these are enough to install perl|perl-core
         inline: |
           [fedora-modular]
           name=Fedora Modular $releasever - $basearch
@@ -161,7 +161,21 @@ storage:
           #!/bin/bash
           
           sudo rpm-ostree install kubectl firewalld perl perl-core open-vm-tools tree nano git tig lsscsi
-          
+
+          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.7.testing.1/rke2-selinux-0.7-1.el8.noarch.rpm
+          sudo rpm-ostree install rke2-selinux-0.7-1.el8.noarch.rpm
+
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          sudo chmod 700 get_helm.sh
+          sudo ./get_helm.sh
+
+          sudo systemctl stop zincati.service
+          sudo reboot
+    - path: /home/rancher/se2.sh
+      mode: 0775
+      contents:
+        inline: |
+          #!/bin/bash
           echo 'source <(kubectl completion bash)' >>~/.bashrc
           kubectl completion bash > /home/rancher/kubectl
           sudo mv /home/rancher/kubectl /etc/bash_completion.d/kubectl
@@ -197,18 +211,12 @@ storage:
           sudo firewall-cmd --direct --add-rule ipv4 filter FORWARD 99 -o cali+ -j ACCEPT
           sudo firewall-cmd --direct --add-rule ipv4 filter FORWARD 99 -i cali+ -j ACCEPT
           sudo firewall-cmd --reload
-
-          sudo systemctl stop zincati.service
           
           sudo systemctl restart firewalld.service
           sudo systemctl restart docker.service
-          sudo systemctl restart NetworkManager
-          
-          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-          sudo chmod 700 get_helm.sh
-          sudo ./get_helm.sh
-          
-    - path: /home/rancher/rke2.sh #https://docs.rke2.io/install/quickstart.html
+          sudo systemctl restart NetworkManager          
+          sudo reboot
+    - path: /home/rancher/rke2.sh # https://docs.rke2.io/install/quickstart.html
       mode: 0775
       contents:
         inline: |
@@ -216,12 +224,41 @@ storage:
           curl -sfL https://get.rke2.io | sudo sh -
           sudo systemctl enable rke2-server.service
           sudo systemctl start rke2-server.service
+          sleep 440
+
+          helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+          helm fetch rancher-latest/rancher
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo update
+          helm fetch jetstack/cert-manager --version v1.0.4
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cert-manager
+          helm template cert-manager ./cert-manager-v1.0.4.tgz --output-dir . \
+              --namespace cert-manager \
+              --set image.repository=quay.io/jetstack/cert-manager-controller \
+              --set webhook.image.repository=quay.io/jetstack/cert-manager-webhook \
+              --set cainjector.image.repository=quay.io/jetstack/cert-manager-cainjector
+          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f cert-manager/cert-manager-crd.yaml
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -R -f cert-manager/templates/
+
+
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cattle-system
+          helm template rancher ./rancher-2.5.8.tgz --output-dir . \
+              --no-hooks \
+              --namespace cattle-system \
+              --set hostname=rancher.localhost \
+              --set certmanager.version=1.0.4 \
+              --set rancherImage=rancher/rancher \
+              --set useBundledSystemChart=true
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml -n cattle-system apply -R -f ./rancher
+
     - path: /etc/rancher/rke2/config.yaml
       mode: 0777
       contents:
         inline: |
-          selinux: false
+          selinux: false # selinux is currently not working
           write-kubeconfig-mode: "0644"
+          disable-cloud-controller: true
     - path: /etc/NetworkManager/conf.d/rke2-canal.conf
       mode: 0600
       contents:

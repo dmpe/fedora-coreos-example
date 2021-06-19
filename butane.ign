@@ -51,10 +51,25 @@
         "mode": 420
       },
       {
-        "path": "/home/rancher/rancher.sh",
+        "path": "/etc/systemd/zram-generator.conf",
+        "contents": {
+          "source": "data:;base64,IyBUaGlzIGNvbmZpZyBmaWxlIGVuYWJsZXMgYSAvZGV2L3pyYW0wIGRldmljZSB3aXRoIHRoZSBkZWZhdWx0IHNldHRpbmdzClt6cmFtMF0K"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/home/rancher/setup.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUX2/aMBTF3/Mp7lSptJscp4GVIq2VKrZKe9gfdZP2goaMfSEejh3ZN6DuYZ99Cgl0LWOQiRcL8O+ce46NfPKCT7TlExGyKAqlcuCLnLlAHhG0DSSMgXk5QUkGKopJlxcGSTsLU+1xKYxRUKA3q4VJ5xFcgZYtckbOmQArLyusg5kmID0DE4IMOopQZg46wZVeIrw5W8/5Y0Q18rwDNze/eFx99jLaQcEN8MzlyL2wMkPPG65ulS/+vgscSa7qjx/9YrUR1wmF0SLA/Lr59WmeGmnUCOwOxuNAwtN4PWP+VBCdwNR5IK8VWoLhl/d1xoAKmIZO4N9HZ9YpjAOGUOUJUtjRefySjy7gGnJhS2F4p86uq6OsVxVLZ6dN4UJQVn0FxtCKiUFgbKkpG+elIV3tKnho7jw8BMK8itqgm5uNA/qFlginp/AM9bhquc3u8Gwi7jd8Bu6we6xxgOU2/K+Qh2bceNVm64NgMlfAWIE+F7a6YcaEUqxwnq7TlJMsDuevknZ8r9dtJ0i7/cvWikFbRdsal617XPX6KS9VC8UgGbTscZGkr5P2kl47STdJkoR10/5l//+F1UnsVSrtUa4tfFn9/YtFD6baEHq4+3T/7fb+LQwGwBxIYfQrYD/gdjh89/nrEb31Qd7HznrsfB6NE2rrPQ3kCviprRSk9zw9dhpYSdqEXdz67TkYVE7O0e+jPiItnZ9/EFbM0Ee/AwAA//+0rK9rEggAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/4SRsW4jMQxE+/0KHq6WtL4rfLhPCAykyAcEWi29EkyJAsm1k3x9YG8QOEWQZorRDDQP/P0rTKWFKWoeBl1nBunVsZogQmlqkQhO64TJCI5F8BKJZugodBOXWBC4Y3Pn6oyZFG7dFhvDUgysLECqScswpFUI3OHxAbJZ1/8hLMXyOvnENUhsKaMEOeEfp0ilrS9BkDAqapj50ojjHM6j33tDtdIWv/uSdqPfu51H+ucbR0nZS6/fUv3c/Nh71KcDOIYF7TkjVa/5c7/Ei98YVkVJ3Ayb3XCuyU1qVEMJmqR007Cguavv/m7TUq48w34c7z/Ynny4tzZPX9WwXs+hxh3eSkvRileUc0k4vAcAAP//J4KN2dEBAAA="
+        },
+        "mode": 509
+      },
+      {
+        "path": "/home/rancher/se2.sh",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/6yUX2vbMBTF3/0p7ig07YYs13GbGpZAyVbYw/7QDfYSFhTpZtYiS0aSE/qyzz5c2yltlyUayUOwrd8599xrfE9e0YXUdMFcESEvDAycqS1HeHu2qhfIvQJuykqhl0ZDg50PYDL5TePm2vJoBwUToIUpkVqmeYGWdlzkamGgXP/9FCh6/hBm/ugXi624TciUZA5W4+7p0zwt0qkRyC3M584z6+d9jdVTQXQCS2PBWylQe5h+/dBmdCiASBg4+mN2po3A2KFzTR7HmZ6dx6/p7ALGUDJdM0UHbXbpuJPtv4i50cuu4Yr5orkFQlCzhUIgZCN9MS9r5WVzKuA+6irfO49lE7VDl9LihiklYod2LTnu4LqyHQSnp/CMs/gwiufgDrvHaAdYvoT/FfLQjFuv1qwfBOGlAEIqtCXTzVsjhAlBKmP9OE2p59Xh/HUSxmfZMEyQDkdXwYo8VBHaxlVwH9fZKKW1CFDkSR7YRz7MLsMUF0l6mYRLsjDJMEmShAzT0dXo/4XN7PYqhbTIewtbNx9Mtc5gKZVHC7ef777f3L2DPAdigDMl3wD5BTfT6fsv347oLQ/yPnbWY+ezqAwTL7Zqv2H2rtUeFIav0O6jPqHfGLv6yDT7iRa2v+hPAAAA//8jOZzZZAcAAA=="
         },
         "mode": 509
       },
@@ -68,9 +83,9 @@
       {
         "path": "/etc/rancher/rke2/config.yaml",
         "contents": {
-          "source": "data:,selinux%3A%20false%0A"
+          "source": "data:,selinux%3A%20false%20%23%20selinux%20is%20currently%20not%20working%0Awrite-kubeconfig-mode%3A%20%220644%22%0Adisable-cloud-controller%3A%20true%0A"
         },
-        "mode": 384
+        "mode": 511
       },
       {
         "path": "/etc/NetworkManager/conf.d/rke2-canal.conf",
