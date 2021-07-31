@@ -58,7 +58,7 @@ storage:
           name=Fedora Modular $releasever - $basearch
           #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Modular/$basearch/os/
           metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&arch=$basearch
-          enabled=0
+          enabled=1
           countme=1
           metadata_expire=7d
           repo_gpgcheck=0
@@ -70,7 +70,7 @@ storage:
           name=Fedora Modular $releasever - $basearch - Updates
           #baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Modular/$basearch/
           metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&arch=$basearch
-          enabled=0
+          enabled=1
           countme=1
           repo_gpgcheck=0
           type=rpm
@@ -93,8 +93,8 @@ storage:
           name=Kubernetes
           baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
           enabled=1
-          gpgcheck=1
-          repo_gpgcheck=1
+          gpgcheck=0
+          repo_gpgcheck=0
           gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
     - path: /etc/hostname
       mode: 0644
@@ -121,7 +121,7 @@ storage:
           #!/bin/bash
           
           sudo rpm-ostree install kubectl firewalld perl perl-core \
-            open-vm-tools tree nano git tig lsscsi iscsi-initiator-utils \
+            open-vm-tools tree nano git tig lsscsi \
             sg3_utils device-mapper-multipath nfs-utils
 
           curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm

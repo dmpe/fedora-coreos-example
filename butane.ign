@@ -32,7 +32,7 @@
         "path": "/etc/yum.repos.d/onprem-fedora.repo",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/9SVTYvbPBSF9/oVhhnenXwdeMmUgChdzMxiGBhKuyihBMW6VlTLltBHmvz7othJnMlAk5B+reIo0jm65+E40wqFcfwraXmD7GHzJbt1qJF7XKLLaHY75x65KxfkJj1Fp9kiBDsBEOZ7qw0XOa54YzWCjXPoBEGrNq6gF/IwkIT7Jbp1WKhWwk4bjAfSYOBatfVG308AGuWccT7vNK0z37AMuXEStlvfO7SGdb/Tgcl/SZTtr44tn2sUbERKE9vQIBtt7AQPfIYrqxyyO0GS2kxaWS6wrFlBwtoic7Yhu7VReqxxzSqlcQIAGEqwtQJnGyqthI8vz/Tx5ZE+3X+hx/ei+yv5WtmZqmax5UuudLofe+DaI5lGK3hAfxKVjGafu+0X8OmNfo7ncja9Be0dBK3OxHQKk9cox4vfgak/1xgRNXeHtJ67xV/dpd7mykXqJzqlUMW/VKiLUF29YMfMrtiuLbrqTHZ/b8u2I6Z9aolnvhSzD90xMkSXEj5Ilr4yeSP3HusQ5ADg/sX1Rkh/ugSfXERSGh/YqCiKIrvJBFY86pApn6UlMq3jHF2L+z+dp93CUXKWlzWX6PNSmyhyaYzUmJemgXVsIA3rYa9HUd/R1bvxbPz/IKXB5Ifp7JI4zU2YMn3SGte5tDI7/VRKtt+1PU1+BAAA//9vIPhRDgkAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/9yVT2sbMRDF7/oUCwm9aceG4hSDKD0kOYRAKO2hmGJkaSyrq10J/XHtb1/kXdsbO1DHuA3k5LU8897o/RjvZI7Sev6TNLxGdrf5Ulx7NMgDLtEXtLie8YDciwW5yk/JG7aI0Y0BpP3dGMtliSteO4Pg0gxaQTC6SSvohAL0JOF2iX4dF7pRsNMGG4DUGLnRTbXRD2OAWntvfShbTeftLxSxtF7BtvSzR2dZ+zvtmXzIomw/OjZ8ZlCyIRE2NbFGNtzYSR75FFdOe2Q3kmS1qXJKLFBUbEDi2iHzria7s2F+rHDN5trgGAAwCnCVBu9qqpyCr0+P9P7pnj7c/qDHc9H9SKHSbqrn09TwJdcmz8fuuAlIJslJHjGcRKWgxfe2/Aw+ndHf8ZzPprOgnYOk81diOoXJIcrR4n9g6vpqK5Ph/jmtx/bwX+9SZ3PhRepu9O4W6ixUF1+wY2YX3K4tuvezZdsr5jq9xFf+KRZf2jbSR5cTfpYsPTB5IfcOax9kD+A+0hdCeusl+OYTEmFDZMPBYDAorgqJc55MLHQo8hGZVGmGvsH9S+dhd3CUnOOi4gpDKYxNslTWKoOlsDWsUw35sgH2ehTNDV19Gk1HH3sp9dI4TKdL4jQ3aUX+pBWuS+VUcXpXTrar2naTPwEAAP//e9QzyA4JAAA="
         },
         "mode": 420
       },
@@ -61,7 +61,7 @@
         "path": "/home/rancher/setup.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4RRQYocMQy89ysUcrY9zB4y5AlhIYdcA4vbrWmLlS0jqWeSvD709BI2h5BLgcslu6r08UOaqac5W50m2xYBHS2IuSICdfPMDK/bjMUZrqR4z8wLDFR+QCiiCN8nABnYw60FF2GDx3zPXWAlB6cV2KwYAe0YqJNTdtGwObE9HrD16eU4LXijgqHlMVBD29hpZK/Qr3bop6lsyhCev36B6j7sc0ored3mWKQlzb1U1KSveA6GTH37kRQZs6GlRe6dJS/pdoqX6GhOfY3nv9ThFC/hHJEvsUvWUqOO9s9+/j/55vdq354hCKzoLxW5Rat//Gu+xyPDZqhFumP3R5xdeUDL5qjJitJwSyt62PnwdFgrtckCn06n9x8cVzG9pw7Ofppj2xdrLgN+US/ZKRrqXv9bWpxFfPodAAD//zcYT/onAgAA"
+          "source": "data:;base64,H4sIAAAAAAAC/4SRMY8UMQyF+/kVRtRJRnsFK34COomCFumUyXgn0TlxZDu7wK9HM3NCR4FoXLx8Vt57/vghLKWFJWqeJh0rg/TqWE0QoTS1SASvY8FkBLci+IhEK3QUOoZLLAjfJwDu2Ny9OmMmhWO/xcawFQMrG5Bq0nKguj29DCuksOK9JHQ19o7i6iArPVqGdlN3ENOUhhC4569fIJt1/RzCViyPxSeuQWJLGSXIK16cIpU2fgRBwqioYeVHI45ruM/+6g3VStv85S/azf7qLh7p6htHSdlLr/9s4v+bb35v+u0ZHMOG9pKRqtf8x7/Ehz8zDEVJ3AybHXF28hw1qqEETVK6adjQ3K67p9NaypVX+DTP7z84n3x4L52a/lTDup9QjTv8Ki1FK15R9vrf0uLCbNPvAAAA//95dVudEQIAAA=="
         },
         "mode": 509
       },
