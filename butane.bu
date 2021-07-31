@@ -1,5 +1,5 @@
 variant: fcos
-version: 1.3.0
+version: 1.4.0
 passwd:
   users:
     - name: rancher
@@ -22,22 +22,6 @@ systemd:
       enabled: false
       mask: true
 storage:
-  # still not working
-  #disks:
-  #  - device: /dev/sda4
-  #    wipe_table: false
-  #    partitions:
-  #    - number: 4
-  #      label: root
-  #      size_mib: 8192
-  #      resize: true
-  #    - size_mib: 20000
-  #      label: var
-  #filesystems:
-  #  - path: /var
-  #    device: /dev/disk/by-partlabel/var
-  #    format: xfs
-  #    with_mount_unit: true
   directories:
     - path: /etc/yum.repos.d # remove that directory
       overwrite: true
@@ -46,63 +30,16 @@ storage:
       mode: 0644
       contents: # these are enough to install perl|perl-core
         inline: |
-          [fedora-modular]
-          name=Fedora Modular $releasever - $basearch
-          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Modular/$basearch/os/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&arch=$basearch
-          enabled=0
+          [fedora]
+          name=Fedora $releasever - $basearch
+          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
+          metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
+          enabled=1
           countme=1
           metadata_expire=7d
           repo_gpgcheck=0
           type=rpm
           gpgcheck=1
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=False
-          [updates-archive]
-          name=Fedora $releasever - $basearch - Updates Archive
-          baseurl=https://fedoraproject-updates-archive.fedoraproject.org/fedora/$releasever/$basearch/
-          enabled=1
-          metadata_expire=6h
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=True
-          cost=10000 # default is 1000
-          [updates-modular]
-          name=Fedora Modular $releasever - $basearch - Updates
-          #baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Modular/$basearch/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&arch=$basearch
-          enabled=0
-          countme=1
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          metadata_expire=6h
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=False
-          [updates-testing-modular]
-          name=Fedora Modular $releasever - $basearch - Test Updates
-          #baseurl=http://download.example/pub/fedora/linux/updates/testing/$releasever/Modular/$basearch/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-modular-f$releasever&arch=$basearch
-          enabled=0
-          countme=1
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          metadata_expire=6h
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=False
-          [updates-testing]
-          name=Fedora $releasever - $basearch - Test Updates
-          #baseurl=http://download.example/pub/fedora/linux/updates/testing/$releasever/Everything/$basearch/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
-          enabled=0
-          countme=1
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          metadata_expire=6h
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
           [updates]
@@ -117,11 +54,11 @@ storage:
           metadata_expire=6h
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
-          [fedora]
-          name=Fedora $releasever - $basearch
-          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
-          enabled=1
+          [fedora-modular]
+          name=Fedora Modular $releasever - $basearch
+          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Modular/$basearch/os/
+          metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&arch=$basearch
+          enabled=0
           countme=1
           metadata_expire=7d
           repo_gpgcheck=0
@@ -129,6 +66,29 @@ storage:
           gpgcheck=1
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
+          [updates-modular]
+          name=Fedora Modular $releasever - $basearch - Updates
+          #baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Modular/$basearch/
+          metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&arch=$basearch
+          enabled=0
+          countme=1
+          repo_gpgcheck=0
+          type=rpm
+          gpgcheck=1
+          metadata_expire=6h
+          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+          skip_if_unavailable=False
+          [updates-archive]
+          name=Fedora $releasever - $basearch - Updates Archive
+          baseurl=https://fedoraproject-updates-archive.fedoraproject.org/fedora/$releasever/$basearch/
+          enabled=1
+          metadata_expire=6h
+          repo_gpgcheck=0
+          type=rpm
+          gpgcheck=1
+          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+          skip_if_unavailable=True
+          cost=10000 # default is 1000
           [kubernetes]
           name=Kubernetes
           baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -160,10 +120,12 @@ storage:
         inline: |
           #!/bin/bash
           
-          sudo rpm-ostree install kubectl firewalld perl perl-core open-vm-tools tree nano git tig lsscsi
+          sudo rpm-ostree install kubectl firewalld perl perl-core \
+            open-vm-tools tree nano git tig lsscsi iscsi-initiator-utils \
+            sg3_utils device-mapper-multipath nfs-utils
 
-          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.7.testing.1/rke2-selinux-0.7-1.el8.noarch.rpm
-          sudo rpm-ostree install rke2-selinux-0.7-1.el8.noarch.rpm
+          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm
+          sudo rpm-ostree install rke2-selinux-0.8-2.el8.noarch.rpm
 
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           sudo chmod 700 get_helm.sh
@@ -183,13 +145,14 @@ storage:
           echo 'complete -F __start_kubectl k' >>~/.bashrc
 
           # for trident CSI
+          sudo sed -i 's/^\(node.session.auth.chap_algs\).*/\1 = MD5/' /etc/iscsi/iscsid.conf
           sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf
-          sudo mpathconf --enable --with_multipathd y
+          sudo mpathconf --enable --with_multipathd y --find_multipaths n
 
           sudo systemctl enable firewalld.service
-          sudo systemctl enable iscsid.service && sudo systemctl restart iscsid.service 
-          sudo systemctl enable multipathd.service && sudo systemctl restart multipathd.service
-          sudo systemctl enable iscsi.service && sudo systemctl restart iscsi.service
+          sudo systemctl enable --now iscsid multipathd
+          sudo systemctl restart iscsi.service multipathd.service
+          sudo systemctl enable --now iscsi
 
           sudo firewall-cmd --permanent --add-port=22/tcp
           sudo firewall-cmd --permanent --add-port=80/tcp
@@ -230,24 +193,24 @@ storage:
           helm fetch rancher-latest/rancher
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm fetch jetstack/cert-manager --version v1.0.4
+          helm fetch jetstack/cert-manager --version v1.2.0
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cert-manager
-          helm template cert-manager ./cert-manager-v1.0.4.tgz --output-dir . \
+          helm template cert-manager ./cert-manager-v1.2.0.tgz --output-dir . \
               --namespace cert-manager \
               --set image.repository=quay.io/jetstack/cert-manager-controller \
               --set webhook.image.repository=quay.io/jetstack/cert-manager-webhook \
               --set cainjector.image.repository=quay.io/jetstack/cert-manager-cainjector
-          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml
+          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.crds.yaml
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f cert-manager/cert-manager-crd.yaml
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -R -f cert-manager/templates/
 
 
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cattle-system
-          helm template rancher ./rancher-2.5.8.tgz --output-dir . \
+          helm template rancher ./rancher-2.5.9.tgz --output-dir . \
               --no-hooks \
               --namespace cattle-system \
               --set hostname=rancher.localhost \
-              --set certmanager.version=1.0.4 \
+              --set certmanager.version=1.2.0 \
               --set rancherImage=rancher/rancher \
               --set useBundledSystemChart=true
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml -n cattle-system apply -R -f ./rancher

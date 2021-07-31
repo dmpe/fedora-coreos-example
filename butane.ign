@@ -1,6 +1,6 @@
 {
   "ignition": {
-    "version": "3.2.0"
+    "version": "3.3.0"
   },
   "passwd": {
     "users": [
@@ -32,7 +32,7 @@
         "path": "/etc/yum.repos.d/onprem-fedora.repo",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/9yW32vbMBDH3/1XCFr2Jp8Dox0FMfbQ9qEUyugeRhlBsS6OZtkS+pEl//1Q7NpOmzEnJPvRp5hD972774dT9DRHoS2nlRZBcfstqXmF7GYTJPdNkJxbVMgdLtESSs5n3CG3+SI5i1/BKrbw3lwBCP2jVpqLFFe8MgrBhBk0BUDJOqygFXIwkIS2DHTCoB0kFXquZF1uxN0VQCWt1daljaCx+jvmPtW2gOejHy0azbYnooNK76I46/vHms8UCpYluQ61r5BNNmUF93yKKyMtskuRRNVpYYp8gXnJssSvDTJrqqSLTeJniWs2lwqvAAB9DqaUYE1FC1PA54d7evtwS++uv9K2v0FftG/JldJM5Xwaar7kUsX+2A1XDpOnYAT36Gg8J5e4jeoXiAglX5o08qlJS4bMoq1bdtIXRXaY3fIcAuzBdZa+NvJi8deNfLQBk1w7zyZZlmXkjAic86A8kY7EUG/yIfvQm33AZrSFf7MYh2/F82CtvOj2Y77ngoyBuIP9H1wQj87LujiU4SM6fwSQbRcnB/pi2rfLc+yFd0J+10u0a7/YhE+A8M2h2/M/6kjX5okodTfnGEyT/wJTkzeK0rEeezvhHOO9tyeUf/edV4YZ2hr79bnrAq8eb4bnJS/QpbnSQaSF1oXCNNcVrEMFcSAHvR5FdUlXHy6mF+8Hngym23agm3ZcNaHz+EtLXKeFKcj4rOhee+o5O/kZAAD//7Md4VGZDAAA"
+          "source": "data:;base64,H4sIAAAAAAAC/9SVTYvbPBSF9/oVhhnenXwdeMmUgChdzMxiGBhKuyihBMW6VlTLltBHmvz7othJnMlAk5B+reIo0jm65+E40wqFcfwraXmD7GHzJbt1qJF7XKLLaHY75x65KxfkJj1Fp9kiBDsBEOZ7qw0XOa54YzWCjXPoBEGrNq6gF/IwkIT7Jbp1WKhWwk4bjAfSYOBatfVG308AGuWccT7vNK0z37AMuXEStlvfO7SGdb/Tgcl/SZTtr44tn2sUbERKE9vQIBtt7AQPfIYrqxyyO0GS2kxaWS6wrFlBwtoic7Yhu7VReqxxzSqlcQIAGEqwtQJnGyqthI8vz/Tx5ZE+3X+hx/ei+yv5WtmZqmax5UuudLofe+DaI5lGK3hAfxKVjGafu+0X8OmNfo7ncja9Be0dBK3OxHQKk9cox4vfgak/1xgRNXeHtJ67xV/dpd7mykXqJzqlUMW/VKiLUF29YMfMrtiuLbrqTHZ/b8u2I6Z9aolnvhSzD90xMkSXEj5Ilr4yeSP3HusQ5ADg/sX1Rkh/ugSfXERSGh/YqCiKIrvJBFY86pApn6UlMq3jHF2L+z+dp93CUXKWlzWX6PNSmyhyaYzUmJemgXVsIA3rYa9HUd/R1bvxbPz/IKXB5Ifp7JI4zU2YMn3SGte5tDI7/VRKtt+1PU1+BAAA//9vIPhRDgkAAA=="
         },
         "mode": 420
       },
@@ -61,7 +61,7 @@
         "path": "/home/rancher/setup.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4SRsW4jMQxE+/0KHq6WtL4rfLhPCAykyAcEWi29EkyJAsm1k3x9YG8QOEWQZorRDDQP/P0rTKWFKWoeBl1nBunVsZogQmlqkQhO64TJCI5F8BKJZugodBOXWBC4Y3Pn6oyZFG7dFhvDUgysLECqScswpFUI3OHxAbJZ1/8hLMXyOvnENUhsKaMEOeEfp0ilrS9BkDAqapj50ojjHM6j33tDtdIWv/uSdqPfu51H+ucbR0nZS6/fUv3c/Nh71KcDOIYF7TkjVa/5c7/Ei98YVkVJ3Ayb3XCuyU1qVEMJmqR007Cguavv/m7TUq48w34c7z/Ynny4tzZPX9WwXs+hxh3eSkvRileUc0k4vAcAAP//J4KN2dEBAAA="
+          "source": "data:;base64,H4sIAAAAAAAC/4RRQYocMQy89ysUcrY9zB4y5AlhIYdcA4vbrWmLlS0jqWeSvD709BI2h5BLgcslu6r08UOaqac5W50m2xYBHS2IuSICdfPMDK/bjMUZrqR4z8wLDFR+QCiiCN8nABnYw60FF2GDx3zPXWAlB6cV2KwYAe0YqJNTdtGwObE9HrD16eU4LXijgqHlMVBD29hpZK/Qr3bop6lsyhCev36B6j7sc0ored3mWKQlzb1U1KSveA6GTH37kRQZs6GlRe6dJS/pdoqX6GhOfY3nv9ThFC/hHJEvsUvWUqOO9s9+/j/55vdq354hCKzoLxW5Rat//Gu+xyPDZqhFumP3R5xdeUDL5qjJitJwSyt62PnwdFgrtckCn06n9x8cVzG9pw7Ofppj2xdrLgN+US/ZKRrqXv9bWpxFfPodAAD//zcYT/onAgAA"
         },
         "mode": 509
       },
@@ -69,14 +69,15 @@
         "path": "/home/rancher/se2.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUX2vbMBTF3/0p7ig07YYs13GbGpZAyVbYw/7QDfYSFhTpZtYiS0aSE/qyzz5c2yltlyUayUOwrd8599xrfE9e0YXUdMFcESEvDAycqS1HeHu2qhfIvQJuykqhl0ZDg50PYDL5TePm2vJoBwUToIUpkVqmeYGWdlzkamGgXP/9FCh6/hBm/ugXi624TciUZA5W4+7p0zwt0qkRyC3M584z6+d9jdVTQXQCS2PBWylQe5h+/dBmdCiASBg4+mN2po3A2KFzTR7HmZ6dx6/p7ALGUDJdM0UHbXbpuJPtv4i50cuu4Yr5orkFQlCzhUIgZCN9MS9r5WVzKuA+6irfO49lE7VDl9LihiklYod2LTnu4LqyHQSnp/CMs/gwiufgDrvHaAdYvoT/FfLQjFuv1qwfBOGlAEIqtCXTzVsjhAlBKmP9OE2p59Xh/HUSxmfZMEyQDkdXwYo8VBHaxlVwH9fZKKW1CFDkSR7YRz7MLsMUF0l6mYRLsjDJMEmShAzT0dXo/4XN7PYqhbTIewtbNx9Mtc5gKZVHC7ef777f3L2DPAdigDMl3wD5BTfT6fsv347oLQ/yPnbWY+ezqAwTL7Zqv2H2rtUeFIav0O6jPqHfGLv6yDT7iRa2v+hPAAAA//8jOZzZZAcAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/6yUQW/aMBiG7/kV39QD7SbHaUihkQZSRVdph25TN2kXtMjYH42HY0e2A+plv31KE8o6DYEnOCCIn+f1+zmSz97QhdR0wVwZIS8NDJxpLEd4f75qFsi9Am6qWqGXRkOLXQxgOv1F4/a35dEeCqZAS1MhtUzzEi3tucg1wkC1/vcqUPT8uUyxy4vFi9w1ZEoyB6tJ//R1nw7pbQRyB0XhPLO+2O6xei1EZ7A0FryVArWH2dePXUeHAoiEgaM/5ufaCIwdOtf2YY0vY16yumDq0c0v4rd0fgkTuL+9ooNuBOm4k923iLnRy0OZjjO9S6qYbpg6EFbVzJftXyAENVsoBEI20pdF1Sgv21UBT0DIUmqxe+ZAR32bJ+exao+k15fS4oYpJWKHdi057uEI0WYDXSHYbfY3bfH54DtwG/kHf/wufeFtP8IrAYTUaCum25dGCBOC1Mb6SZpSz+vj+eskjM+yYZiQDsejYCMPNULHGAXPcZ2NU9qIACNP8sA58mF2FWZcJulVEq5kYcowSZKEDNPxaPz/Ynt2B00hLfJthG0UgqzXGSyl8mjh7vPD95uHW8hzIAY4U/IdkJ9wM5t9+PLthNnyqOxTdz11P4vKMBHtu5YO3nZbUBi+QnuI+oR+Y+zqnmn2iBZePh1vcWGMj34HAAD//9NHZDpvBwAA"
         },
         "mode": 509
       },
       {
         "path": "/home/rancher/rke2.sh",
         "contents": {
-          "source": "data:,%23!%2Fbin%2Fbash%0Acurl%20-sfL%20https%3A%2F%2Fget.rke2.io%20%7C%20sudo%20sh%20-%0Asudo%20systemctl%20enable%20rke2-server.service%0Asudo%20systemctl%20start%20rke2-server.service%0A"
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/6yUPY/UMBCG+/yKQdRjH6ejAGkbqJCugpZm4sxufOvYwTO50yJ+PMonSVghFtHsJvHrZ75e+/UrW/poS5K6cF0OgHJ8hFq1lffWnlhNPvO98Ql+gHRVAqkBi/HpIsqN0wAcqQwMvRKF8zNn0/95x3ulKGW9LgzMLTw83BVFzaGBzG0CqirIFF3NGQMpiy6pZQ5MwmKmdeNSY0cmupqyih13jLgjq6t3LDu97gI+sYqSOy+hRpyZvxufVju6tiLldZBZZx1nxYYinTgD4jNn8SnC8xtzb+6Kc1dy3xLE4SnFoz+BZXVzWrZv0/BjLtQEcJlJGSI1LC05hjV/TEC5afvaNktgNpngGN/o6Tsgpk7bTrHyGQx8LQAAEK+HWJaFFXxDJzZ9B8RrypfDt44uxid7tXp0KWpOIewoL1zWKZ3NjbRp2wblyMcndpryrbRfO6cT8AiYNpXv9LkaB7KcEq91Vw4GvBph8aqt0ksMiSo7zmCjMi5XMoBvtwa1bbgAHv8i63+Gf/6NP7tNbFH8DzuTamAcL4udnycGmJmG9+atefdHEyfsTSLXXL2OtHFRnUR73WG+VUJyFPqvW7Nx1nls07E+DBPdqCbGp96Oh6ULUyVrYSf8oYtV4OrLkNLH/sI5aO749rZi3JW3Ht/SvuJnAAAA///DjiDA+AUAAA=="
         },
         "mode": 509
       },

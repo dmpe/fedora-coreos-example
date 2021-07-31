@@ -1,9 +1,9 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.04
 LABEL MAINTAINER "Uwe Dauernheim <uwe@dauernheim.net>"
 
 # Suppress warning about UTF-8
 ENV LC_CTYPE=POSIX
-ENV OVFTOOL_FILENAME=VMware-ovftool-4.4.0-16360108-lin.x86_64.bundle
+ENV OVFTOOL_FILENAME=VMware-ovftool-4.4.1-16812187-lin.x86_64.bundle
 
 ADD $OVFTOOL_FILENAME /tmp/
 
