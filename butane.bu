@@ -115,9 +115,9 @@ storage:
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo mv kubectl /usr/local/bin/kubectl
           sudo chmod +x /usr/local/bin/kubectl
+          
           sudo rpm-ostree install firewalld perl perl-core \
-            open-vm-tools tree nano git tig lsscsi \
-            sg3_utils device-mapper-multipath nfs-utils
+            open-vm-tools tree nano git tig lsscsi nfs-utils
 
           curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm
           sudo rpm-ostree install rke2-selinux-0.8-2.el8.noarch.rpm
