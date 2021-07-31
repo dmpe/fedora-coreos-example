@@ -1,6 +1,7 @@
 #!/bin/bash
 
 butane_file=$1
+coreos_stream=$2
 
 if [[ -z "$butane_file" ]]; then 
     echo "No butane file was passed."
@@ -11,16 +12,15 @@ now=$(date +%s)
 
 if [[ ! $(ls -A ./ova) ]]; then
     echo "No ova files exist. Downloading now..."
-    docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s next -C /work/ova/
+    docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 
 elif [[ $(find ./ova -type f -mtime +10 -print) ]]; then
     echo "File $filename exists and is older than 100 days. Removing"
     find ./ova -type f -mtime +10 -name '*.ova' -execdir rm -- '{}' \;   
-    docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s next -C /work/ova/
+    docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 fi
 
 coreos_images=$(find ./ova -type f -name "*.ova")
-image_mod_time=$(stat -c "%Y" $coreos_images)
 
 FEDORA_VERSION="$(echo ${coreos_images} | cut -d "-" -f 3,4)"
 VM_NAME='fcos-node01'
