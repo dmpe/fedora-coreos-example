@@ -89,13 +89,6 @@ storage:
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=True
           cost=10000 # default is 1000
-          [kubernetes]
-          name=Kubernetes
-          baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-          enabled=1
-          gpgcheck=0
-          repo_gpgcheck=0
-          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
     - path: /etc/hostname
       mode: 0644
       contents:
@@ -119,8 +112,10 @@ storage:
       contents:
         inline: |
           #!/bin/bash
-          
-          sudo rpm-ostree install kubectl firewalld perl perl-core \
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo mv kubectl /usr/local/bin/kubectl
+          sudo chmod +x /usr/local/bin/kubectl
+          sudo rpm-ostree install firewalld perl perl-core \
             open-vm-tools tree nano git tig lsscsi \
             sg3_utils device-mapper-multipath nfs-utils
 
