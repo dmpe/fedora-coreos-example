@@ -18,6 +18,8 @@ systemd:
       enabled: false
     - name: docker.service
       enabled: true
+    - name: zincati.service
+      enabled: false
     - name: rpm-ostree-countme.timer # telemetry
       enabled: false
       mask: true
@@ -115,20 +117,21 @@ storage:
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo mv kubectl /usr/local/bin/kubectl
           sudo chmod +x /usr/local/bin/kubectl
-          
-          sudo rpm-ostree install firewalld perl perl-core \
-            open-vm-tools tree nano git tig lsscsi nfs-utils
-
-          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm
-          sudo rpm-ostree install rke2-selinux-0.8-2.el8.noarch.rpm
 
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           sudo chmod 700 get_helm.sh
           sudo ./get_helm.sh
+          sudo rm -rf ./get_helm.sh
 
-          sudo systemctl stop zincati.service
+          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm
+          sudo rpm-ostree install rke2-selinux-0.8-2.el8.noarch.rpm
+          sudo rm -rf ./rke2-selinux-0.8-2.el8.noarch.rpm
+
+          sudo rpm-ostree install firewalld perl perl-core \
+            open-vm-tools tree nano git tig lsscsi nfs-utils
+
           sudo reboot
-    - path: /home/rancher/se2.sh
+    - path: /home/rancher/more.sh
       mode: 0775
       contents:
         inline: |
@@ -149,20 +152,20 @@ storage:
           sudo systemctl restart iscsi.service multipathd.service
           sudo systemctl enable --now iscsi
 
-          sudo firewall-cmd --permanent --add-port=22/tcp
-          sudo firewall-cmd --permanent --add-port=80/tcp
-          sudo firewall-cmd --permanent --add-port=443/tcp
-          sudo firewall-cmd --permanent --add-port=2376/tcp
-          sudo firewall-cmd --permanent --add-port=2379/tcp
-          sudo firewall-cmd --permanent --add-port=2380/tcp
-          sudo firewall-cmd --permanent --add-port=6443/tcp
-          sudo firewall-cmd --permanent --add-port=8472/udp
-          sudo firewall-cmd --permanent --add-port=9099/tcp
-          sudo firewall-cmd --permanent --add-port=9345/tcp
-          sudo firewall-cmd --permanent --add-port=10250/tcp
-          sudo firewall-cmd --permanent --add-port=10254/tcp
-          sudo firewall-cmd --permanent --add-port=30000-32767/tcp
-          sudo firewall-cmd --permanent --add-port=30000-32767/udp
+          sudo firewall-cmd --permanent --zone=docker --add-port=22/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=80/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=443/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=2376/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=2379/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=2380/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=6443/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=8472/udp
+          sudo firewall-cmd --permanent --zone=docker --add-port=9099/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=9345/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=10250/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=10254/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=30000-32767/tcp
+          sudo firewall-cmd --permanent --zone=docker --add-port=30000-32767/udp
 
           sudo firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 99 -o cali+ -j ACCEPT
           sudo firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 99 -i cali+ -j ACCEPT
