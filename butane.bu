@@ -2,6 +2,14 @@ variant: fcos
 version: 1.4.0
 passwd:
   users:
+    - name: core
+      home_dir: /home/core
+      groups:
+        - docker
+        - sudo
+        - wheel
+      shell: /bin/bash
+      password_hash: $y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.
     - name: rancher
       home_dir: /home/rancher
       groups: # adds 'rancher' user to root group
@@ -16,21 +24,44 @@ systemd:
   units:
     - name: podman.service
       enabled: false
+      mask: true
     - name: docker.service
       enabled: true
     - name: zincati.service
       enabled: false
+      mask: true
     - name: rpm-ostree-countme.timer # telemetry
       enabled: false
       mask: true
+    - name: rpm-ostree-refresh-md.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Refresh Repo Metadata
+        # We run after `systemd-machine-id-commit.service` to ensure that
+        # `ConditionFirstBoot=true` services won't rerun on the next boot.
+        After=systemd-machine-id-commit.service
+        After=network-online.target
+        # We run before `zincati.service` to avoid conflicting rpm-ostree
+        # transactions.
+        Before=zincati.service
+        ConditionPathExists=!/var/lib/%N.stamp
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/rpm-ostree refresh-md
+        ExecStart=/bin/touch /var/lib/%N.stamp
+        ExecStart=/bin/systemctl --no-block reboot
+        [Install]
+        WantedBy=multi-user.target
 storage:
   directories:
-    - path: /etc/yum.repos.d # remove that directory
+    - path: /etc/yum.repos.d # remove this directory
       overwrite: true
   files:
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
-      contents: # these are enough to install perl|perl-core
+      contents:
         inline: |
           [fedora]
           name=Fedora $releasever - $basearch
@@ -128,7 +159,7 @@ storage:
           sudo rm -rf ./rke2-selinux-0.8-2.el8.noarch.rpm
 
           sudo rpm-ostree install firewalld perl perl-core \
-            open-vm-tools tree nano git tig lsscsi nfs-utils
+            open-vm-tools tree nano git tig lsscsi nfs-utils python3 python3-devel
 
           sudo reboot
     - path: /home/rancher/more.sh
@@ -212,7 +243,6 @@ storage:
               --set rancherImage=rancher/rancher \
               --set useBundledSystemChart=true
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml -n cattle-system apply -R -f ./rancher
-
     - path: /etc/rancher/rke2/config.yaml
       mode: 0777
       contents:

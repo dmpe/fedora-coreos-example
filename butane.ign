@@ -10,6 +10,17 @@
           "sudo",
           "wheel"
         ],
+        "homeDir": "/home/core",
+        "name": "core",
+        "passwordHash": "$y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.",
+        "shell": "/bin/bash"
+      },
+      {
+        "groups": [
+          "docker",
+          "sudo",
+          "wheel"
+        ],
         "homeDir": "/home/rancher",
         "name": "rancher",
         "sshAuthorizedKeys": [
@@ -61,15 +72,15 @@
         "path": "/home/rancher/setup.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4SRwc7TMAzH730K88EBhJJMA8HEI6BJHLgioTT12mhOXNluN3h6tLaaxmH6Lj78+3Pjn/32TWhzDW3UoUmTELjjD3gZzEb9FkJH/nxQnzkIEkbF8O79RoFTeI6pxZbQ29U+LP+nXKdriKX78jmcpxaT0UujU8dQZtgCCJNKIE6Rlp4tXrE0FO7g4/UZtFIyFsdqggi5qkUiOGXBSyTqYEShpbjEgvCrAeARq5uLM2ZSWPpqrAx9NrDcA6kmzVBP6ibLpM19R9/v8n22YWp94hIk1jSgBDnj3imu0ttKNHR8qcSxC/POH7yhWq693/9Hu50/uL1HOvjKUdLgZSxP3V7v3OY96c8jOIYe7feAVLwO9/klXvzqMClK4mpYbdG5kWspUQ0laJI8moYezd1y9+nxOF93u8cH1k8+PEZrpn/UsNwursYj/M01RcteUeaccLPFltmafwEAAP//AP/xCJ8CAAA="
+          "source": "data:;base64,H4sIAAAAAAAC/4yQ0a7TMAyG7/cU5sAFCCWZdhBMPAI6EhfcIqE09ZpoTlzZ7jbeHp22mw6gCW5c6ffn+otfvwpdaaGLmjdpEgL39BUestmon0PoyR/36gsHQcKoGN68XSlwCvcxtdgRervYu/n/VNp0CbH2Hz+E49RhMnrY6NQz1BOsAYRJJRCnSPPMGi9YypV7eH+5B63yB/32BI5hQPuRkarXfLOUePZDsTx1k6IkbobNfOIansml1KiGEjRJGU3DgOaec/f40uLTdvtywdLy4a9IKjg5/NG5XfnLTWyRmk0ktpRRghxx5xSXs61H1dDzuRHHPpy2fu8N1Uob/O432m393u080t43jpKyl7GuPmN1rCaIUJpaJIL/nby+5N/83VWHIniORD2MKDQXl1gQvm8AeMTmTtUZMynMcy02hqEYWBmAVJMWaAd1kxVSGH9a5vZ4/boeT0jX5dgx2+ZXAAAA//8CNt+v2wIAAA=="
         },
         "mode": 509
       },
       {
-        "path": "/home/rancher/se2.sh",
+        "path": "/home/rancher/more.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUQW/aMBiG7/kV39QD7SbHaUihkQZSRVdph25TN2kXtMjYH42HY0e2A+plv31KE8o6DYEnOCCIn+f1+zmSz97QhdR0wVwZIS8NDJxpLEd4f75qFsi9Am6qWqGXRkOLXQxgOv1F4/a35dEeCqZAS1MhtUzzEi3tucg1wkC1/vcqUPT8uUyxy4vFi9w1ZEoyB6tJ//R1nw7pbQRyB0XhPLO+2O6xei1EZ7A0FryVArWH2dePXUeHAoiEgaM/5ufaCIwdOtf2YY0vY16yumDq0c0v4rd0fgkTuL+9ooNuBOm4k923iLnRy0OZjjO9S6qYbpg6EFbVzJftXyAENVsoBEI20pdF1Sgv21UBT0DIUmqxe+ZAR32bJ+exao+k15fS4oYpJWKHdi057uEI0WYDXSHYbfY3bfH54DtwG/kHf/wufeFtP8IrAYTUaCum25dGCBOC1Mb6SZpSz+vj+eskjM+yYZiQDsejYCMPNULHGAXPcZ2NU9qIACNP8sA58mF2FWZcJulVEq5kYcowSZKEDNPxaPz/Ynt2B00hLfJthG0UgqzXGSyl8mjh7vPD95uHW8hzIAY4U/IdkJ9wM5t9+PLthNnyqOxTdz11P4vKMBHtu5YO3nZbUBi+QnuI+oR+Y+zqnmn2iBZePh1vcWGMj34HAAD//9NHZDpvBwAA"
+          "source": "data:;base64,H4sIAAAAAAAC/6yUwWvbMBTG7/4r3ugh7YYs13GTGpZASVfYodvoBruEGUV6qbXIkpHkhO6wv324dpp1LKRU8cHY0vf93vf0QCdv6EJqumCujJCXBgbONJYjvD9dNQvkXgE3Va3QS6OhlZ0NYDr9TeP22/JojwqmQEtTIbVM8xIt7XWRa4SBav3/XaDo+WOYYseLxZO5S8iUZA5Wk371eZ5O0rsRyA0UhfPM+mJbY/XcEJ3A0ljwVgrUHmZfP3YZHQogEgaO/pifaiMwduhcm4c1vox5yeqCqXs3P4vf0vk5TOD2+oIOuhak4052bxFzo5eHmI4zvSNVTDdMHYBVNfNl+wuEoGYLhUDIRvqyqBrlZbsr4AEIWUotdmsOdNSneXAeq/ZIevtSWtwwpUTs0K4lxz06QrTZQBcIdsX+VVt8PPhOuEX+pX95lT7wNh/hlQBCarQV0+3QCPllNE6E4Su0QAgTgtTG+kmaUs/r17ovkxB3lg1D7OlwPAr052H+sPZHgf1fZuOUNuLV/jzJg/rPh9lFiP88SS+SUEAWAhgmSZKQYToejY+FaedxkCOkRe57hG0UgqzXGSyl8mjh5vPd96u7a8hzIAY4U/IdkJ9wNZt9+PLtiGz5Ivaxsx47n0VlmIj2Xa0Hb+ytsBvrIdUn9BtjV7dMs3u08PR0eosLY3z0JwAA//+EsB8bMwgAAA=="
         },
         "mode": 509
       },
@@ -101,11 +112,16 @@
     "units": [
       {
         "enabled": false,
+        "mask": true,
         "name": "podman.service"
       },
       {
         "enabled": true,
         "name": "docker.service"
+      },
+      {
+        "enabled": false,
+        "name": "zincati.service"
       },
       {
         "enabled": false,
