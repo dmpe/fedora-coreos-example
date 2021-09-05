@@ -102,7 +102,7 @@
       {
         "path": "/etc/NetworkManager/conf.d/rke2-canal.conf",
         "contents": {
-          "source": "data:,%5Bkeyfile%5D%0Aunmanaged-devices%3Dinterface-name%3Acali*%3Binterface-name%3Aflannel*%0A"
+          "source": "data:,%5Bkeyfile%5D%0Aunmanaged-devices%3Dinterface-name%3Acali*%3Binterface-name%3Aflannel*"
         },
         "mode": 384
       }
@@ -121,12 +121,18 @@
       },
       {
         "enabled": false,
+        "mask": true,
         "name": "zincati.service"
       },
       {
         "enabled": false,
         "mask": true,
         "name": "rpm-ostree-countme.timer"
+      },
+      {
+        "contents": "[Unit]\nDescription=Refresh Repo Metadata\n# We run after `systemd-machine-id-commit.service` to ensure that\n# `ConditionFirstBoot=true` services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before `zincati.service` to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/rpm-ostree refresh-md\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "rpm-ostree-refresh-md.service"
       }
     ]
   }

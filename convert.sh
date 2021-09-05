@@ -12,6 +12,7 @@ now=$(date +%s)
 
 if [[ ! $(ls -A ./ova) ]]; then
     echo "No ova files exist. Downloading now..."
+    mkdir -p ova
     docker run -v $(pwd):/work --rm --pull=always quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 
 elif [[ $(find ./ova -type f -mtime +10 -print) ]]; then
@@ -30,9 +31,10 @@ sudo rm -rf $LIBRARY/$VM_NAME || true
 
 sudo rm -rf butane.ign
 
-docker run --rm -v $(pwd):/work --pull=missing quay.io/coreos/butane:release --pretty --strict /work/$butane_file > butane.ign
+docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pretty --strict /work/$butane_file > butane.ign
 
 BUTANE_CONFIG=$(cat butane.ign | base64 -w0 -)
+echo $BUTANE_CONFIG > butane.base64
 
 docker run --rm -it -v $(pwd):/tmp -v $LIBRARY:/$LIBRARY ovftool:latest \
     --powerOffTarget \
