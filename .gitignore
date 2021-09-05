@@ -3,3 +3,4 @@ ova/*
 rke/rke2.yaml
 vmware-root/*
 *.rkestate
+ansible/vars.yml
