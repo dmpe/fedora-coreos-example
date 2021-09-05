@@ -3,13 +3,34 @@
   - name: community.vmware
   tasks:
   - name: Deploy Virtual Machine from OVF template in content library
-    community.vmware.vmware_content_deploy_ovf_template:
-      hostname: ''
+    community.vmware.vmware_deploy_ovf:
+      allow_duplicates: no
+      hostname: 'fcos-node01'
       username: 'root'
       password: '{{ vcenter_password }}'
-      ovf_template: rhel_test_template
+      ovf: ..//////
       datastore: datastore1
+      power_on: off
+      properties:
+        guestinfo.ignition.config.data.encoding: base64
+        guestinfo.ignition.config.data: 
       folder: vm
       datacenter: ha-datacenter
-      name: coreos
+      name: fcos-node01
+      resource_pool: "Resources"
     delegate_to: localhost
+  - name: Reconfigure powered off VM 
+    community.vmware.vmware_guest:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "ha-datacenter"
+      state: poweredoff
+      cluster: "{{ ccr1 }}"
+      name: fcos-node01
+      guest_id: fedora64Guest
+      hardware:
+        version: latest
+        num_cpus: 4
+        boot_firmware: efi
+        secure_boot: yes
