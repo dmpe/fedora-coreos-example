@@ -17,6 +17,7 @@ passwd:
         - sudo
         - wheel
       shell: /bin/bash
+      password_hash: $y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.
       ssh_authorized_keys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyOrTl3ywl/WNQW2ag1G4JZBxewcMwZHYmCvkXF9tYY jm@jm2
         - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuLxsBsAx2QQP4XiPpdsbnbEIxuu2sS1aAXzw3eNYmC8eY+pR2ek5DDu+XwmYw8Jd26ayAeFhEj+QVXaG6nx/XLKmKUWFvjljPwkqT7MJq+3HdjdsPJ/GWabxxVu9rqB/cRiropX7HB7csDoKYQzdizxIN1qy4YyFJueLl/VXhx1ribsIo40LivAMSh+cuGrSzOTBPEsxk1RFsjTQNGkjhByPfNeIUkLRn8bKEeHy8rREfo9EypJdemyyL8phKXFijDruogXuJV2Qr0KJbstJuH3UZAagzOTSG6oY5cQ/RRx4pLL1YPfQ/8YkFNcuiL05YpLDvrYOPOL2SAcTQMjDOZayaLot+qQCqisuokgO9sqOwUIcx4XhubQvc2+puYmzIi+CZYIT5/62tOBpT+qBm/2bD0mEQKfpgodCy/vDSlVp0eqKA9K1UQ5VxbHrEJISTdcWy5Kg655KH90jm//HA54OQIIWkLHwbw7va0YmfF+9xgOYphTu5KlWPJVSv/Fc= jm@jm

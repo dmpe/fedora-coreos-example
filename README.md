@@ -60,3 +60,9 @@ helm template rancher ./rancher-2.5.8.tgz --output-dir . \
 sudo kubectl create namespace cattle-system
 sudo kubectl -n cattle-system apply -R -f ./rancher
 ```
+
+# Ansible
+
+```
+ansible-playbook ansible/main.yml -e 'vcenter_password=xxx'
+```
