@@ -17,6 +17,7 @@ passwd:
         - sudo
         - wheel
       shell: /bin/bash
+      password_hash: $y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.
       ssh_authorized_keys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtfFkj3QCQavxs+iek1BvguMoy2/db4/DFqgd3WceaJ jm@jm
 systemd:
