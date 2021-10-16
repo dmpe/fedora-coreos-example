@@ -10,7 +10,7 @@ ssh -i ~/.ssh/rancher/id_rsa2 -o StrictHostKeyChecking=no rancher@192.168.226.13
 ssh -i ~/.ssh/rancher/id_ed255519_3 -o StrictHostKeyChecking=no rancher@192.168.226.134
 ```
 
-# Requirenments
+# Requirements
 
 1. Installing VMware Workstation
 2. Building OVFTools docker container

@@ -24,8 +24,7 @@
         "homeDir": "/home/rancher",
         "name": "rancher",
         "sshAuthorizedKeys": [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyOrTl3ywl/WNQW2ag1G4JZBxewcMwZHYmCvkXF9tYY jm@jm2",
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuLxsBsAx2QQP4XiPpdsbnbEIxuu2sS1aAXzw3eNYmC8eY+pR2ek5DDu+XwmYw8Jd26ayAeFhEj+QVXaG6nx/XLKmKUWFvjljPwkqT7MJq+3HdjdsPJ/GWabxxVu9rqB/cRiropX7HB7csDoKYQzdizxIN1qy4YyFJueLl/VXhx1ribsIo40LivAMSh+cuGrSzOTBPEsxk1RFsjTQNGkjhByPfNeIUkLRn8bKEeHy8rREfo9EypJdemyyL8phKXFijDruogXuJV2Qr0KJbstJuH3UZAagzOTSG6oY5cQ/RRx4pLL1YPfQ/8YkFNcuiL05YpLDvrYOPOL2SAcTQMjDOZayaLot+qQCqisuokgO9sqOwUIcx4XhubQvc2+puYmzIi+CZYIT5/62tOBpT+qBm/2bD0mEQKfpgodCy/vDSlVp0eqKA9K1UQ5VxbHrEJISTdcWy5Kg655KH90jm//HA54OQIIWkLHwbw7va0YmfF+9xgOYphTu5KlWPJVSv/Fc= jm@jm"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtfFkj3QCQavxs+iek1BvguMoy2/db4/DFqgd3WceaJ jm@jm"
         ],
         "shell": "/bin/bash"
       }
@@ -72,7 +71,7 @@
         "path": "/home/rancher/setup.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4yQ0a7TMAyG7/cU5sAFCCWZdhBMPAI6EhfcIqE09ZpoTlzZ7jbeHp22mw6gCW5c6ffn+otfvwpdaaGLmjdpEgL39BUestmon0PoyR/36gsHQcKoGN68XSlwCvcxtdgRervYu/n/VNp0CbH2Hz+E49RhMnrY6NQz1BOsAYRJJRCnSPPMGi9YypV7eH+5B63yB/32BI5hQPuRkarXfLOUePZDsTx1k6IkbobNfOIansml1KiGEjRJGU3DgOaec/f40uLTdvtywdLy4a9IKjg5/NG5XfnLTWyRmk0ktpRRghxx5xSXs61H1dDzuRHHPpy2fu8N1Uob/O432m393u080t43jpKyl7GuPmN1rCaIUJpaJIL/nby+5N/83VWHIniORD2MKDQXl1gQvm8AeMTmTtUZMynMcy02hqEYWBmAVJMWaAd1kxVSGH9a5vZ4/boeT0jX5dgx2+ZXAAAA//8CNt+v2wIAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/3SPz24UMQzG73mKj20PrVAmFQWKQOIJKnHgWCqUSTw70SbxKPZst2+PdvaPAHUvjmT/HP++q3euT9X1XkZj0oCnJ9gdVtc3gUvxNcJusZl7CppvV3h+/gYdqRogzC3DPv7AalSd5KtzMXebL9Ildo0yeSF3fXOkYAWXMVHfZ+p0p7eLTE513jlf4ueP7nh7ZQCZI6OcdeBmaS5z8HnZOrZPYBgLR7zfXcKGhIuBR8rlrbSD/HyEZaxJf++ZTsZzrOZfunXSce5noRa4KlXtAhe3Jw+leFFqTkJLk4pbk9p9397/K/1wd/f3idOwc280W4Ftw3+zIRlzhTqInTVlsYEbsSAJfG7k4yumxilShP1+DnCQX4wPvBsocvPHbavNhw01l0RmEvfp4YM5GEzFsmgjQqqiPmcMqdGLzzliopaXsvyCXwbgiardFqvMWbDsVV8Z66TIIkESplcdud6fXhtpS9kcz1HPrOZPAAAA///dLt3/uAIAAA=="
         },
         "mode": 509
       },
@@ -88,7 +87,7 @@
         "path": "/home/rancher/rke2.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6yUPY/UMBCG+/yKQdRjH6ejAGkbqJCugpZm4sxufOvYwTO50yJ+PMonSVghFtHsJvHrZ75e+/UrW/poS5K6cF0OgHJ8hFq1lffWnlhNPvO98Ql+gHRVAqkBi/HpIsqN0wAcqQwMvRKF8zNn0/95x3ulKGW9LgzMLTw83BVFzaGBzG0CqirIFF3NGQMpiy6pZQ5MwmKmdeNSY0cmupqyih13jLgjq6t3LDu97gI+sYqSOy+hRpyZvxufVju6tiLldZBZZx1nxYYinTgD4jNn8SnC8xtzb+6Kc1dy3xLE4SnFoz+BZXVzWrZv0/BjLtQEcJlJGSI1LC05hjV/TEC5afvaNktgNpngGN/o6Tsgpk7bTrHyGQx8LQAAEK+HWJaFFXxDJzZ9B8RrypfDt44uxid7tXp0KWpOIewoL1zWKZ3NjbRp2wblyMcndpryrbRfO6cT8AiYNpXv9LkaB7KcEq91Vw4GvBph8aqt0ksMiSo7zmCjMi5XMoBvtwa1bbgAHv8i63+Gf/6NP7tNbFH8DzuTamAcL4udnycGmJmG9+atefdHEyfsTSLXXL2OtHFRnUR73WG+VUJyFPqvW7Nx1nls07E+DBPdqCbGp96Oh6ULUyVrYSf8oYtV4OrLkNLH/sI5aO749rZi3JW3Ht/SvuJnAAAA///DjiDA+AUAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/6xUT48TPwy9z6fwT7+znVIt0oLUC5xAKyHBlUuacTvZZpLB8XQp4sOj+dftlBHaIi7tKHl+tp9f/P9/Zuuj2dpcFa6VAPjw6SNUqk1+a8zea9VuyaXaiI2uYjFy4DVmDj62341wYJs5mzI9xZBsaY4ruiflrD7uaT1D44rucU0c7ikmK64iaeoit2UCaWpMWYUZfMxqQ4CXRtaAsgN6Qaahvbx7eG6Plbo48gl+Qs+XK8CBOZ+ycu00AEe7DTxVJEcW6v6842tkViu6DAzMDdzdrYqi4lCDcJPAliWMumKwnWrn0iZlabzvZzBwoqusaDZDxEC3Y3XVFdc0squEj6xZrTucUw10NJ2TTxcRbVNa5cskE844FsXaRrtnAcQjS/YpwvEVrWlVHNotd5Ig9l8p7vweDKubOan/oZOtAzhhqwzR1pwb6xgu+YcClOum6212BTSrBIf8pPsfgJhabVrF0gsQfC0AABCXU5yvMyv42u6ZOgWy1ySnzbfWnsgns9g9uhRVUghXLE+8rVI60I1sY9iMylkfH9lpklvZniOnBw6YZp1f4aUcBrKwBBYzLG2BfgYzFDkpc098uzVs04QT4O4FVf81+eff+Ce3ZVMU/8LOVjUwDsviys8jR7fGxie8ptf05o8mTtiZJC+5+jLTzEVVytrhNtNWCcnZ0J3Ozcai09jGZ73pJzpDjRwfOjtuziqMnVwC28zv2lgGLr/0Jb3vFs5GpeXbZcV41d7l+M7yFb8CAAD//9KebM3XBgAA"
         },
         "mode": 509
       },

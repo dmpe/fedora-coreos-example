@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:21.10
 LABEL MAINTAINER "Uwe Dauernheim <uwe@dauernheim.net>"
 
 # Suppress warning about UTF-8
