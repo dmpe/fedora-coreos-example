@@ -87,30 +87,6 @@ storage:
           metadata_expire=6h
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
-          [fedora-modular]
-          name=Fedora Modular $releasever - $basearch
-          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Modular/$basearch/os/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&arch=$basearch
-          enabled=1
-          countme=1
-          metadata_expire=7d
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=False
-          [updates-modular]
-          name=Fedora Modular $releasever - $basearch - Updates
-          #baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Modular/$basearch/
-          metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&arch=$basearch
-          enabled=1
-          countme=1
-          repo_gpgcheck=0
-          type=rpm
-          gpgcheck=1
-          metadata_expire=6h
-          gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
-          skip_if_unavailable=False
           [updates-archive]
           name=Fedora $releasever - $basearch - Updates Archive
           baseurl=https://fedoraproject-updates-archive.fedoraproject.org/fedora/$releasever/$basearch/
@@ -146,22 +122,33 @@ storage:
         inline: |
           #!/bin/bash
           
-          if [[ -x "$(command -v kubectl)" ]]; then
+          if ! type kubectl &> /dev/null; then
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             sudo mv kubectl /usr/local/bin/kubectl
             sudo chmod +x /usr/local/bin/kubectl
+            kubectl completion bash > /home/rancher/kubectl
+            echo 'source <(kubectl completion bash)' >>~/.bashrc
+            echo 'alias k=kubectl' >>~/.bashrc
+            echo 'complete -F __start_kubectl k' >>~/.bashrc
+            sudo mv /home/rancher/kubectl /etc/bash_completion.d/kubectl
           fi 
           
-          if [[ -x "$(command -v helm)" ]]; then
+          if ! type helm &> /dev/null; then
             curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
             sudo chmod 700 get_helm.sh
             sudo ./get_helm.sh
             sudo rm -rf ./get_helm.sh
+            helm completion bash > /home/rancher/helm
+            sudo mv /home/rancher/helm /etc/bash_completion.d/helm
           fi
 
-          # nfs-utils-coreos is already proided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
+          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.9.testing.0/rke2-selinux-0.9-0.el8.noarch.rpm
+
+          # nfs-utils-coreos is already provided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
           sudo rpm-ostree install firewalld perl perl-core \
-            open-vm-tools tree nano git lsscsi python3 python3-devel
+            open-vm-tools tree nano git lsscsi rke2-selinux-0.9-0.el8.noarch.rpm
+
+          sudo rm -rf ./rke2-selinux-0.9-0.el8.noarch.rpm
 
           sudo reboot
     - path: /home/rancher/more.sh
@@ -169,12 +156,6 @@ storage:
       contents:
         inline: |
           #!/bin/bash
-          echo 'source <(kubectl completion bash)' >>~/.bashrc
-          kubectl completion bash > /home/rancher/kubectl
-          sudo mv /home/rancher/kubectl /etc/bash_completion.d/kubectl
-          echo 'alias k=kubectl' >>~/.bashrc
-          echo 'complete -F __start_kubectl k' >>~/.bashrc
-
           # for trident CSI
           sudo sed -i 's/^\(node.session.auth.chap_algs\).*/\1 = MD5/' /etc/iscsi/iscsid.conf
           sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf
@@ -208,45 +189,47 @@ storage:
           
           sudo systemctl restart firewalld.service
           sudo systemctl restart docker.service
-          sudo systemctl restart NetworkManager          
+          sudo systemctl restart NetworkManager
           sudo reboot
-    - path: /home/rancher/rke2.sh # https://docs.rke2.io/install/quickstart.html
+    - path: /home/rancher/rke2.sh # https://docs.rke2.io/install/quickstart/
       mode: 0775
       contents:
         inline: |
           #!/bin/bash
-          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.8.testing.2/rke2-selinux-0.8-2.el8.noarch.rpm
-          sudo rpm-ostree install rke2-selinux-0.8-2.el8.noarch.rpm
-          sudo rm -rf ./rke2-selinux-0.8-2.el8.noarch.rpm
           curl -sfL https://get.rke2.io | sudo sh -
           sudo systemctl enable rke2-server.service
           sudo systemctl start rke2-server.service
-          sleep 440
 
           helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
-          helm fetch rancher-latest/rancher
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm fetch jetstack/cert-manager --version v1.2.0
-          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cert-manager
-          helm template cert-manager ./cert-manager-v1.2.0.tgz --output-dir . \
+          helm fetch rancher-latest/rancher
+          helm fetch jetstack/cert-manager --version v1.5.1
+          helm template cert-manager ./cert-manager-v1.5.1.tgz --output-dir . \
               --namespace cert-manager \
               --set image.repository=quay.io/jetstack/cert-manager-controller \
               --set webhook.image.repository=quay.io/jetstack/cert-manager-webhook \
               --set cainjector.image.repository=quay.io/jetstack/cert-manager-cainjector
-          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.crds.yaml
+          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+          
+          
+          sleep 60
+          kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cert-manager
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f cert-manager/cert-manager-crd.yaml
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -R -f cert-manager/templates/
 
-
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cattle-system
-          helm template rancher ./rancher-2.5.9.tgz --output-dir . \
+          helm template rancher ./rancher-2.6.2.tgz --output-dir . \
               --no-hooks \
               --namespace cattle-system \
+              --set bootstrapPassword="rancher" \
               --set hostname=rancher.localhost \
-              --set certmanager.version=1.2.0 \
+              --set certmanager.version=1.5.1 \
               --set rancherImage=rancher/rancher \
-              --set useBundledSystemChart=true
+              --set useBundledSystemChart=true \
+              --set ingress.tls.source=rancher \
+              --set replicas=1
+          sleep 10
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml -n cattle-system apply -R -f ./rancher
     - path: /etc/rancher/rke2/config.yaml
       mode: 0777
