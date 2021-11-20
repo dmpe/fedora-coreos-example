@@ -17,7 +17,7 @@ if [[ ! $(ls -A ./ova) ]]; then
         quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 
 elif [[ $(find ./ova -type f -mtime +10 -print) ]]; then
-    echo "File $filename exists and is older than 100 days. Removing"
+    echo "File $filename exists and is older than 10 days. Removing..."
     find ./ova -type f -mtime +10 -name '*.ova*' -execdir rm -- '{}' \;   
     docker run -v $(pwd):/work --rm --pull=always \
         quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
