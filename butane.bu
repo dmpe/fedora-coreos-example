@@ -145,7 +145,7 @@ storage:
           curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.9.stable.1/rke2-selinux-0.9-1.el8.noarch.rpm
 
           # nfs-utils-coreos is already provided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
-          sudo rpm-ostree install firewalld perl perl-core \
+          sudo rpm-ostree install firewalld perl perl-core man \
             open-vm-tools tree nano git lsscsi rke2-selinux-0.9-1.el8.noarch.rpm
 
           sudo rm -rf ./rke2-selinux-0.9-1.el8.noarch.rpm
