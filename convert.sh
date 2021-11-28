@@ -60,6 +60,8 @@ sed -i 's/4096/3096/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
 
 vmrun -T ws start "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
+sudo rm -rf ${butane_file}_temp.bu
+
 # sleep 25
 
 # ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134

@@ -59,7 +59,12 @@ storage:
     - path: /etc/yum.repos.d # remove this directory
       overwrite: true
   files:
-
+    - path: /etc/profile.d/nano.sh
+      overwrite: true
+      contents:
+        inline: |
+          #/bin/bash
+          export EDITOR=nano
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
       contents:
