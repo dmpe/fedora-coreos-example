@@ -1,26 +1,29 @@
 # fedora-coreos-example
 
-Fedora CoreOS ignition examples
+Fedora CoreOS ignition file which boots up kubernetes ready VM on VMware ESXi. 
 
 ```{shell}
 chmod +x convert.sh
-./convert.sh butane.bu
+./convert.sh butane.bu <stream:testing,stage,next>
 
-ssh -i ~/.ssh/rancher/id_rsa2 -o StrictHostKeyChecking=no rancher@192.168.226.134
 ssh -i ~/.ssh/rancher/id_ed255519_3 -o StrictHostKeyChecking=no rancher@192.168.226.134
 ```
 
+
+# Development & Testing
 # Requirements
 
 1. Installing VMware Workstation
 2. Building OVFTools docker container
-3. SSH Keys - not the rsa type
+3. SSH Keys - dont use RSA type. Not tested by me anymore.
 
 # OVFTools
 
 Building tools using <https://github.com/djui/docker-ovftool>
 
-1. Download vmware ovftools binary to `ovftools` folder, from vmware support site
+1. Download vmware ovftools binary to `ovftools` folder, from vmware support site.
+
+<https://developer.vmware.com/web/tool/4.4.0/ovf>
 
 2. Build using:
 
@@ -62,6 +65,8 @@ sudo kubectl -n cattle-system apply -R -f ./rancher
 ```
 
 # Ansible
+
+Was just for some testing. Don't use it.
 
 ```
 ansible-playbook ansible/main.yml -e 'vcenter_password=xxx'

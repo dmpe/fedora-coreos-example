@@ -33,7 +33,7 @@ sudo rm -rf $LIBRARY/$VM_NAME || true
 sudo rm -rf butane.base64
 sudo rm -rf butane.ign
 
-sed -e "s/hostname/$VM_NAME/g" $butane_file > ${butane_file}_temp.bu
+sed -e "s|inline: hostname|inline: $VM_NAME|g" $butane_file > ${butane_file}_temp.bu
 
 docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pretty --strict /work/${butane_file}_temp.bu > butane.ign
 
@@ -43,6 +43,7 @@ echo $BUTANE_CONFIG > butane.base64
 docker run --rm -it -v $(pwd):/tmp -v $LIBRARY:/$LIBRARY ovftool:latest \
     --powerOffTarget \
     --overwrite \
+    --disableVerification \
     --acceptAllEulas \
     --name="${VM_NAME}" \
     --allowExtraConfig \
@@ -60,7 +61,7 @@ sed -i 's/4096/3096/g' $LIBRARY/$VM_NAME/$VM_NAME.vmx
 
 vmrun -T ws start "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
-sudo rm -rf ${butane_file}_temp.bu
+# sudo rm -rf ${butane_file}_temp.bu
 
 # sleep 25
 

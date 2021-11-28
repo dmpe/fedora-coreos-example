@@ -3,7 +3,7 @@ LABEL MAINTAINER "Uwe Dauernheim <uwe@dauernheim.net>"
 
 # Suppress warning about UTF-8
 ENV LC_CTYPE=POSIX
-ENV OVFTOOL_FILENAME=VMware-ovftool-4.4.1-16812187-lin.x86_64.bundle
+ENV OVFTOOL_FILENAME=VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle
 
 ADD $OVFTOOL_FILENAME /tmp/
 
