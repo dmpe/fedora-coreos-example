@@ -5,3 +5,6 @@ vmware-root/*
 *.rkestate
 ansible/vars.yml
 vmware-roo*
+*.base64
+*.ign
+*_temp.bu

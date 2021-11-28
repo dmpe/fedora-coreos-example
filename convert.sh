@@ -23,17 +23,19 @@ elif [[ $(find ./ova -type f -mtime +10 -print) ]]; then
         quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 fi
 
-coreos_images=$(find ./ova -type f -name "*.ova")
+COREOS_IMAGES=$(find ./ova -type f -name "*.ova")
 
-FEDORA_VERSION="$(echo ${coreos_images} | cut -d "-" -f 3,4)"
+FEDORA_VERSION="$(echo ${COREOS_IMAGES} | cut -d "-" -f 3,4)"
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
 
 sudo rm -rf $LIBRARY/$VM_NAME || true
-
+sudo rm -rf butane.base64
 sudo rm -rf butane.ign
 
-docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pretty --strict /work/$butane_file > butane.ign
+sed -e "s/hostname/$VM_NAME/g" $butane_file > ${butane_file}_temp.bu
+
+docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pretty --strict /work/${butane_file}_temp.bu > butane.ign
 
 BUTANE_CONFIG=$(cat butane.ign | base64 -w0 -)
 echo $BUTANE_CONFIG > butane.base64
