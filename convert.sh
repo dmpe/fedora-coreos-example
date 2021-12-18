@@ -16,16 +16,13 @@ if [[ ! $(ls -A ./ova) ]]; then
     docker run -v $(pwd):/work --rm --pull=always \
         quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 
-elif [[ $(find ./ova -type f -mtime +10 -print) ]]; then
-    echo "File $filename exists and is older than 10 days. Removing..."
-    find ./ova -type f -mtime +10 -name '*.ova*' -execdir rm -- '{}' \;   
+elif [[ $(find ./ova -type f -mtime +5 -print) ]]; then
+    echo "File $filename exists and is older than 5 days. Removing..."
+    find ./ova -type f -mtime +5 -name '*.ova*' -execdir rm -- '{}' \;   
     docker run -v $(pwd):/work --rm --pull=always \
         quay.io/coreos/coreos-installer:release download -p vmware -f ova -s $coreos_stream -C /work/ova/
 fi
 
-COREOS_IMAGES=$(find ./ova -type f -name "*.ova")
-
-FEDORA_VERSION="$(echo ${COREOS_IMAGES} | cut -d "-" -f 3,4)"
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
 
@@ -39,6 +36,9 @@ docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pr
 
 BUTANE_CONFIG=$(cat butane.ign | base64 -w0 -)
 echo $BUTANE_CONFIG > butane.base64
+
+COREOS_IMAGES=$(find ./ova -type f -name "*.ova")
+FEDORA_VERSION="$(echo ${COREOS_IMAGES} | cut -d "-" -f 3,4)"
 
 docker run --rm -it -v $(pwd):/tmp -v $LIBRARY:/$LIBRARY ovftool:latest \
     --powerOffTarget \
