@@ -121,7 +121,7 @@ storage:
         inline: |
           # This config file enables a /dev/zram0 device with the default settings
           [zram0]
-    - path: /home/rancher/setup.sh
+    - path: /home/rancher/1_setup.sh
       mode: 0775
       contents:
         inline: |
@@ -156,7 +156,7 @@ storage:
           sudo rm -rf ./rke2-selinux-0.9-1.el8.noarch.rpm
 
           sudo reboot
-    - path: /home/rancher/more.sh
+    - path: /home/rancher/2_setup.sh
       mode: 0775
       contents:
         inline: |
@@ -171,20 +171,20 @@ storage:
           sudo systemctl restart iscsi.service multipathd.service
           sudo systemctl enable --now iscsi
 
-          sudo firewall-cmd --permanent --zone=docker --add-port=22/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=80/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=443/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=2376/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=2379/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=2380/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=6443/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=8472/udp
-          sudo firewall-cmd --permanent --zone=docker --add-port=9099/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=9345/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=10250/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=10254/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=30000-32767/tcp
-          sudo firewall-cmd --permanent --zone=docker --add-port=30000-32767/udp
+          sudo firewall-cmd --permanent --zone=public --add-port=22/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=443/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=2376/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=2379/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=2380/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=6443/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=8472/udp
+          sudo firewall-cmd --permanent --zone=public --add-port=9099/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=9345/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=10250/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=10254/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=30000-32767/tcp
+          sudo firewall-cmd --permanent --zone=public --add-port=30000-32767/udp
 
           sudo firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 99 -o cali+ -j ACCEPT
           sudo firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 99 -i cali+ -j ACCEPT
@@ -196,7 +196,7 @@ storage:
           sudo systemctl restart docker.service
           sudo systemctl restart NetworkManager
           sudo reboot
-    - path: /home/rancher/rke2.sh # https://docs.rke2.io/install/quickstart/
+    - path: /home/rancher/3_rke2.sh # https://docs.rke2.io/install/quickstart/
       mode: 0775
       contents:
         inline: |
