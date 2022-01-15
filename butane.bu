@@ -59,12 +59,6 @@ storage:
     - path: /etc/yum.repos.d # remove this directory
       overwrite: true
   files:
-    - path: /etc/profile.d/nano.sh
-      overwrite: true
-      contents:
-        inline: |
-          #/bin/bash
-          export EDITOR=nano
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
       contents:
@@ -151,7 +145,7 @@ storage:
 
           # nfs-utils-coreos is already provided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
           sudo rpm-ostree install firewalld perl perl-core man \
-            open-vm-tools tree nano git lsscsi rke2-selinux-0.9-1.el8.noarch.rpm
+            open-vm-tools tree git lsscsi rke2-selinux-0.9-1.el8.noarch.rpm
 
           sudo rm -rf ./rke2-selinux-0.9-1.el8.noarch.rpm
 
@@ -224,7 +218,7 @@ storage:
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -R -f cert-manager/templates/
 
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cattle-system
-          helm template rancher ./rancher-2.6.2.tgz --output-dir . \
+          helm template rancher ./rancher-2.6.3.tgz --output-dir . \
               --no-hooks \
               --namespace cattle-system \
               --set bootstrapPassword="rancher" \
