@@ -6,7 +6,7 @@ Fedora CoreOS ignition file which boots up kubernetes ready VM on VMware ESXi.
 chmod +x convert.sh
 ./convert.sh butane.bu <stream:testing,stage,next>
 
-ssh -i ~/.ssh/rancher/id_ed255519_3 -o StrictHostKeyChecking=no rancher@192.168.226.134
+ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134
 ```
 
 

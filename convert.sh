@@ -8,6 +8,11 @@ if [[ -z "$butane_file" ]]; then
     exit 1
 fi
 
+if [[ -z "$coreos_stream" ]]; then 
+    echo "No coreos stream was passed."
+    exit 1
+fi
+
 now=$(date +%s)
 
 if [[ ! $(ls -A ./ova) ]]; then
