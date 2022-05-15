@@ -39,18 +39,18 @@ fi
 
 now=$(date +%s)
 
-# if [[ ! $(ls -A ./${form}) ]]; then
-#     echo "No ova files exist. Downloading now..."
-#     mkdir -p ova  
-#     docker run -v $(pwd):/work --rm --pull=always \
-#         quay.io/coreos/coreos-installer:release download -p ${tp} -f ${form} -s $coreos_stream $(echo ${more_args[@]})
+if [[ ! $(ls -A ./${form}) ]]; then
+    echo "No ova files exist. Downloading now..."
+    mkdir -p ova  
+    docker run -v $(pwd):/work --rm --pull=always \
+        quay.io/coreos/coreos-installer:release download -p ${tp} -f ${form} -s $coreos_stream $(echo ${more_args[@]})
 
-# elif [[ $(find ./${form##.xz} -type f -mtime +5 -print) ]]; then
-#     echo "File $filename exists and is older than 5 days. Removing..."
-#     find ./ova -type f -mtime +5 ! \( -name "*.ova*" -o -name "*.qcoqw2.*" \) -execdir rm -- '{}' \;   
-#     docker run -v $(pwd):/work --rm --pull=always \
-#         quay.io/coreos/coreos-installer:release download -p ${tp} -f ${form} -s $coreos_stream $(echo ${more_args[@]})
-# fi
+elif [[ $(find ./${form##.xz} -type f -mtime +5 -print) ]]; then
+    echo "File $filename exists and is older than 5 days. Removing..."
+    find ./ova -type f -mtime +5 ! \( -name "*.ova*" -o -name "*.qcoqw2.*" \) -execdir rm -- '{}' \;   
+    docker run -v $(pwd):/work --rm --pull=always \
+        quay.io/coreos/coreos-installer:release download -p ${tp} -f ${form} -s $coreos_stream $(echo ${more_args[@]})
+fi
 
 VM_NAME='fcos-node01'
 LIBRARY="$HOME/vmware"
