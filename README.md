@@ -32,6 +32,8 @@ cd ovftools
 docker build -t ovftool .
 ```
 
+See <https://github.com/mkubecek/vmware-host-modules/> for building host modules.
+
 # Rancher with RKE 2
 
 

@@ -82,8 +82,8 @@ if [[ "$type" == "vm" ]]; then
         --extraConfig:guestinfo.ignition.config.data="${BUTANE_CONFIG}" \
         /tmp/ova/fedora-coreos-${FEDORA_VERSION} ${LIBRARY}
 
-    sudo chown -R $USER:$USER $HOME/vmware/$VM_NAME
     sudo chmod -R 777 $HOME/vmware/$VM_NAME
+    sudo chown -R $USER:$USER $HOME/vmware/$VM_NAME
 
     vmrun -T ws upgradevm "$LIBRARY/$VM_NAME/$VM_NAME.vmx"
 
