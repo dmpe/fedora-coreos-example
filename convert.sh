@@ -66,7 +66,7 @@ docker run --rm -v $(pwd):/work --pull=always quay.io/coreos/butane:release --pr
 BUTANE_CONFIG=$(cat butane.ign | base64 -w0 -)
 echo $BUTANE_CONFIG > butane.base64
 
-COREOS_IMAGES=$(find ./ova -type f ! \( -name "*.ova*" -o -name "*.qcoqw2.*" \))
+COREOS_IMAGES=$(find ./ova -type f ! \( -name "*.ova.sig" -o -name "*.qcoqw2.sig" \))
 echo $COREOS_IMAGES
 FEDORA_VERSION="$(echo ${COREOS_IMAGES} | cut -d "-" -f 3,4)"
 
