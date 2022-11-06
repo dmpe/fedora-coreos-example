@@ -4,20 +4,20 @@ Fedora CoreOS ignition file which boots up kubernetes ready VM on VMware ESXi.
 
 ```{shell}
 chmod +x convert.sh
-./convert.sh butane.bu <stream:testing,stage,next>
+./convert.sh butane.bu <stream:testing,stage,next> <vm|vb|qu>
 
 ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134
 ```
 
-
 # Development & Testing
-# Requirements
+
+## Requirements
 
 1. Installing VMware Workstation
 2. Building OVFTools docker container
 3. SSH Keys - dont use RSA type. Not tested by me anymore.
 
-# OVFTools
+## OVFTools
 
 Building tools using <https://github.com/djui/docker-ovftool>
 

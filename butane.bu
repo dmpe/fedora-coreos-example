@@ -25,6 +25,12 @@ systemd:
     - name: podman.service
       enabled: false
       mask: true
+    - name: nm-cloud-setup.service
+      enabled: false
+      mask: true
+    - name: nm-cloud-setup.timer
+      enabled: false
+      mask: true
     - name: docker.service
       enabled: true
     - name: zincati.service
@@ -141,14 +147,13 @@ storage:
             sudo mv /home/rancher/helm /etc/bash_completion.d/helm
           fi
 
-          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.9.stable.1/rke2-selinux-0.9-1.el8.noarch.rpm
+          curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.10.testing.1/rke2-selinux-0.10-1.el8.noarch.rpm
 
           # nfs-utils-coreos is already provided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
           sudo rpm-ostree install firewalld perl perl-core man \
-            open-vm-tools tree git lsscsi rke2-selinux-0.9-1.el8.noarch.rpm
+            open-vm-tools tree git lsscsi rke2-selinux-0.10-1.el8.noarch.rpm
 
-          sudo rm -rf ./rke2-selinux-0.9-1.el8.noarch.rpm
-
+          sudo rm -rf ./rke2-selinux-0.10-1.el8.noarch.rpm
           sudo reboot
     - path: /home/rancher/2_setup.sh
       mode: 0775
