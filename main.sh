@@ -14,7 +14,7 @@ _abort() {
 }
 
 _connect(){
-  ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134
+  ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no "rancher@${ip}"
 }
 
 _info "Script location: $base"
@@ -32,14 +32,15 @@ parameters:
   --type          <vmware|virtualbox|qemu>     Start image using Workstation, VirtBox, or Qemu emulator
   --stream        <testing|next|stable>        CoreOS stream: 
   --butane                                     Location to the Butane file
+  --ip                                         Pass IP address to connect to the VM
 EOF
   exit "$1"
 }
 
 _setup() {
-  
+
   declare -g vm_name library now dc_butane dc_installer dc_ovtftool action
-  declare -g butane_file coreos_stream virt_type
+  declare -g butane_file coreos_stream virt_type ip
   declare -g -a docker_dwn
   docker_dwn=("-C /work/ova/")
 
@@ -58,6 +59,7 @@ _check_args() {
       --type) virt_type="$2"; shift;;
     --stream) coreos_stream="$2"; shift;;
     --butane) butane_file="$2"; shift;;
+        --ip) ip="$2"; shift;;
    -h|--help) _usage 0;;
        build|\
          con|\
