@@ -208,13 +208,13 @@ storage:
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
           helm fetch rancher-latest/rancher
-          helm fetch jetstack/cert-manager --version v1.5.1
-          helm template cert-manager ./cert-manager-v1.5.1.tgz --output-dir . \
+          helm fetch jetstack/cert-manager --version v1.7.1
+          helm template cert-manager ./cert-manager-v1.7.1.tgz --output-dir . \
               --namespace cert-manager \
               --set image.repository=quay.io/jetstack/cert-manager-controller \
               --set webhook.image.repository=quay.io/jetstack/cert-manager-webhook \
               --set cainjector.image.repository=quay.io/jetstack/cert-manager-cainjector
-          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+          curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
           
           
           sleep 60
@@ -223,12 +223,12 @@ storage:
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -R -f cert-manager/templates/
 
           kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml create namespace cattle-system
-          helm template rancher ./rancher-2.6.3.tgz --output-dir . \
+          helm template rancher ./rancher-2.7.0.tgz --output-dir . \
               --no-hooks \
               --namespace cattle-system \
               --set bootstrapPassword="rancher" \
               --set hostname=rancher.localhost \
-              --set certmanager.version=1.5.1 \
+              --set certmanager.version=1.7.1 \
               --set rancherImage=rancher/rancher \
               --set useBundledSystemChart=true \
               --set ingress.tls.source=rancher \

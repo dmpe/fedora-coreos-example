@@ -1,21 +1,22 @@
-# fedora-coreos-example
+# Fedora CoreOS @ VMware Workstation
 
-Fedora CoreOS ignition file which boots up kubernetes ready VM on VMware ESXi. 
+`main.sh` downloads VMware OVA file with Fedora CoreOS and creates virtual machine for lab testing purposes.
+
+Repository contains an ready-to-run example of `butane.bu` (ignition) file which boots up 1 single node VM on VMware Workstation, Virtual Box or Qemu.
+Only VMware setup has been tested.
 
 ```{shell}
-chmod +x convert.sh
-./convert.sh butane.bu <stream:testing,stage,next> <vm|vb|qu>
+chmod +x main.sh 
+./main.sh create --butane butane.bu --stream <testing,stage,next> --type <vm|vb|qu>
 
-ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no rancher@192.168.226.134
+./main.sh con
 ```
-
-# Development & Testing
 
 ## Requirements
 
-1. Installing VMware Workstation
-2. Building OVFTools docker container
-3. SSH Keys - dont use RSA type. Not tested by me anymore.
+1. Installing VMware Workstation/VirtualBox/Qemu
+2. (For VMware Workstation) Building OVFTools docker container
+3. SSH Keys - dont use RSA type due to CoreOS (lack of) support for it.
 
 ## OVFTools
 
@@ -25,50 +26,25 @@ Building tools using <https://github.com/djui/docker-ovftool>
 
 <https://developer.vmware.com/web/tool/4.4.0/ovf>
 
+Store `.bundle` file in `ovftools` folder.
+
 2. Build using:
 
 ```
-cd ovftools
-docker build -t ovftool .
+./main.sh build
 ```
+
+# VMware Troubleshooting
 
 See <https://github.com/mkubecek/vmware-host-modules/> for building host modules.
 
 # Rancher with RKE 2
 
+See `butane.bu` file.
 
-```
-helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
-helm fetch rancher-latest/rancher
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm fetch jetstack/cert-manager --version v1.0.4
-curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml
-helm template cert-manager ./cert-manager-v1.0.4.tgz --output-dir . \
-    --namespace cert-manager \
-    --set image.repository=quay.io/jetstack/cert-manager-controller \
-    --set webhook.image.repository=quay.io/jetstack/cert-manager-webhook \
-    --set cainjector.image.repository=quay.io/jetstack/cert-manager-cainjector
+# Ansible for ESXi Servers
 
-sudo kubectl create namespace cert-manager
-sudo kubectl apply -f cert-manager/cert-manager-crd.yaml
-sudo kubectl apply -R -f ./cert-manager
-
-helm template rancher ./rancher-2.5.8.tgz --output-dir . \
-    --no-hooks \
-    --namespace cattle-system \
-    --set hostname=rancher.localhost \
-    --set certmanager.version=v1.0.4 \
-    --set rancherImage=rancher/rancher \
-    --set useBundledSystemChart=true
-
-sudo kubectl create namespace cattle-system
-sudo kubectl -n cattle-system apply -R -f ./rancher
-```
-
-# Ansible
-
-Was just for some testing. Don't use it.
+Was just for some testing. Not ready for production use - may not work.
 
 ```
 ansible-playbook ansible/main.yml -e 'vcenter_password=xxx'
