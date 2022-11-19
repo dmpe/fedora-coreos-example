@@ -7,7 +7,7 @@ Only VMware setup has been tested.
 
 ```{shell}
 chmod +x main.sh 
-./main.sh create --butane butane.bu --stream <testing,stage,next> --type <vm|vb|qu>
+./main.sh create --butane butane.bu --stream <testing,stage,next> --type <vmware|virtualbox|qemu>
 
 ./main.sh con
 ```
