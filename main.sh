@@ -14,7 +14,7 @@ _abort() {
 }
 
 _connect(){
-  ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no "rancher@${ip}"
+  ssh -i ~/.ssh/rancher/id_ed25519 -o StrictHostKeyChecking=no "core@${ip}"
 }
 
 _info "Script location: $base"
@@ -43,7 +43,7 @@ _setup() {
   declare -g butane_file coreos_stream virt_type ip
   declare -g -a docker_dwn
   docker_dwn=("-C /work/ova/")
-
+  
   vm_name='fcos-node01'
   library="$HOME/vmware"
   now=$(date +%s)
@@ -179,7 +179,7 @@ _vm() {
 
   vmrun -T ws upgradevm "$library/$vm_name/$vm_name.vmx"
 
-  sed -i 's/4096/3096/g' $library/$vm_name/$vm_name.vmx
+  sed -i 's/4096/2096/g' $library/$vm_name/$vm_name.vmx
 
   vmrun -T ws start "$library/$vm_name/$vm_name.vmx"
 }

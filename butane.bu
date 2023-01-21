@@ -4,12 +4,9 @@ passwd:
   users:
     - name: core
       home_dir: /home/core
-      groups:
-        - docker
-        - sudo
-        - wheel
-      shell: /bin/bash
       password_hash: $y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtfFkj3QCQavxs+iek1BvguMoy2/db4/DFqgd3WceaJ jm@jm
     - name: rancher
       home_dir: /home/rancher
       groups: # adds 'rancher' user to root group
@@ -39,25 +36,29 @@ systemd:
     - name: rpm-ostree-countme.timer # telemetry
       enabled: false
       mask: true
-    - name: rpm-ostree-refresh-md.service
+    - name: iscsid.service
+      enabled: true
+    - name: multipathd.service
+      enabled: true
+    - name: iscsi.service
+      enabled: true
+    - name: NetworkManager-wait-online.service
+      enabled: false
+      mask: true
+    - name: postinstall.service
       enabled: true
       contents: |
         [Unit]
-        Description=Refresh Repo Metadata
-        # We run after `systemd-machine-id-commit.service` to ensure that
-        # `ConditionFirstBoot=true` services won't rerun on the next boot.
-        After=systemd-machine-id-commit.service
+        Description=Post Installation
         After=network-online.target
-        # We run before `zincati.service` to avoid conflicting rpm-ostree
-        # transactions.
-        Before=zincati.service
-        ConditionPathExists=!/var/lib/%N.stamp
+        Wants=network-online.target
+
         [Service]
-        Type=oneshot
+        TimeoutStartSec=0
+        User=core
         RemainAfterExit=yes
-        ExecStart=/usr/bin/rpm-ostree refresh-md
-        ExecStart=/bin/touch /var/lib/%N.stamp
-        ExecStart=/bin/systemctl --no-block reboot
+        ExecStart=/bin/bash -c ". /home/core/0_setup.sh"
+
         [Install]
         WantedBy=multi-user.target
 storage:
@@ -65,13 +66,57 @@ storage:
     - path: /etc/yum.repos.d # remove this directory
       overwrite: true
   files:
+    - path: /etc/iscsi/iscsid.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          iscsid.startup = /bin/systemctl start iscsid.socket iscsiuio.socket
+          node.startup = automatic
+          node.leading_login = No
+          node.session.timeo.replacement_timeout = 120
+          node.conn[0].timeo.login_timeout = 15
+          node.conn[0].timeo.logout_timeout = 15
+          node.conn[0].timeo.noop_out_interval = 5
+          node.conn[0].timeo.noop_out_timeout = 5
+          node.session.err_timeo.abort_timeout = 15
+          node.session.err_timeo.lu_reset_timeout = 30
+          node.session.err_timeo.tgt_reset_timeout = 30
+          node.session.initial_login_retry_max = 8
+          node.session.cmds_max = 128
+          node.session.queue_depth = 32
+          node.session.xmit_thread_priority = -20
+          node.session.iscsi.InitialR2T = No
+          node.session.iscsi.ImmediateData = Yes
+          node.session.iscsi.FirstBurstLength = 262144
+          node.session.iscsi.MaxBurstLength = 16776192
+          node.conn[0].iscsi.MaxRecvDataSegmentLength = 262144
+          node.conn[0].iscsi.MaxXmitDataSegmentLength = 0
+          discovery.sendtargets.iscsi.MaxRecvDataSegmentLength = 32768
+          node.conn[0].iscsi.HeaderDigest = None
+          node.session.nr_sessions = 1
+          node.session.reopen_max = 0
+          node.session.iscsi.FastAbort = Yes
+          node.session.scan = manual
+          node.session.auth.chap_algs = MD5
+    - path: /etc/multipath.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          defaults {
+            user_friendly_names yes
+            find_multipaths no
+          }
+
+          blacklist {
+          }
     - path: /etc/yum.repos.d/onprem-fedora.repo
       mode: 0644
       contents:
         inline: |
           [fedora]
           name=Fedora $releasever - $basearch
-          #baseurl=http://download.example/pub/fedora/linux/releases/$releasever/Everything/$basearch/os/
           metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
           enabled=1
           countme=1
@@ -83,7 +128,6 @@ storage:
           skip_if_unavailable=False
           [updates]
           name=Fedora $releasever - $basearch - Updates
-          #baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Everything/$basearch/
           metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
           enabled=1
           countme=1
@@ -93,6 +137,12 @@ storage:
           metadata_expire=6h
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=False
+          [rancher-rke2-common-latest]
+          name=Rancher RKE2 Common Latest
+          baseurl=https://rpm.rancher.io/rke2/latest/common/centos/8/noarch
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://rpm.rancher.io/public.key
           [updates-archive]
           name=Fedora $releasever - $basearch - Updates Archive
           baseurl=https://fedoraproject-updates-archive.fedoraproject.org/fedora/$releasever/$basearch/
@@ -103,7 +153,6 @@ storage:
           gpgcheck=1
           gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
           skip_if_unavailable=True
-          cost=10000 # default is 1000
     - path: /etc/hostname
       mode: 0644
       contents:
@@ -115,12 +164,21 @@ storage:
           # Raise console message logging level from DEBUG (7) to WARNING (4)
           # to hide audit messages from the interactive console
           kernel.printk=4
-    - path: /etc/systemd/zram-generator.conf
-      mode: 0644
+    # - path: /etc/systemd/zram-generator.conf
+    #   mode: 0644
+    #   contents:
+    #     inline: |
+    #       # This config file enables a /dev/zram0 device with the default settings
+    #       [zram0]
+    - path: /home/core/0_setup.sh
+      mode: 0775
       contents:
         inline: |
-          # This config file enables a /dev/zram0 device with the default settings
-          [zram0]
+          #!/bin/bash
+          
+          sudo rpm-ostree install firewalld perl open-vm-tools rke2-selinux
+
+          # sudo reboot
     - path: /home/rancher/1_setup.sh
       mode: 0775
       contents:
@@ -160,15 +218,8 @@ storage:
       contents:
         inline: |
           #!/bin/bash
-          # for trident CSI
-          sudo sed -i 's/^\(node.session.auth.chap_algs\).*/\1 = MD5/' /etc/iscsi/iscsid.conf
-          sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf
-          sudo mpathconf --enable --with_multipathd y --find_multipaths n
 
           sudo systemctl enable firewalld.service
-          sudo systemctl enable --now iscsid multipathd
-          sudo systemctl restart iscsi.service multipathd.service
-          sudo systemctl enable --now iscsi
 
           sudo firewall-cmd --permanent --zone=public --add-port=22/tcp
           sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
