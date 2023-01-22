@@ -47,7 +47,7 @@ _setup() {
   vm_name='fcos-node01'
   library="$HOME/vmware"
   now=$(date +%s)
-  dc_butane="quay.io/coreos/butane:release"
+  dc_butane="quay.io/coreos/butane:latest"
   dc_installer="quay.io/coreos/coreos-installer:release"
   dc_ovtftool="ovftool:latest"
 

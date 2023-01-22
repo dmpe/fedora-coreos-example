@@ -1,5 +1,5 @@
 variant: fcos
-version: 1.4.0
+version: 1.5.0-experimental
 passwd:
   users:
     - name: core
@@ -17,6 +17,18 @@ passwd:
       password_hash: $y$j9T$e3bd2nu78GmscX993ax1y.$UTWNgF0bn/3LrA/0LYl5LwtnQU46crCjKE13eWEv6Z.
       ssh_authorized_keys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtfFkj3QCQavxs+iek1BvguMoy2/db4/DFqgd3WceaJ jm@jm
+extensions:
+  - name: "firewalld"
+  - name: "perl"
+  - name: "open-vm-tools"
+  - name: "rke2-selinux"
+  - name: "container-selinux"
+  - name: "iptables"
+  - name: "libnetfilter_conntrack"
+  - name: "libnfnetlink"
+  - name: "libnftnl"
+  - name: "policycoreutils-python-utils"
+  - name: "rke2-common"
 systemd:
   units:
     - name: podman.service
@@ -45,22 +57,6 @@ systemd:
     - name: NetworkManager-wait-online.service
       enabled: false
       mask: true
-    - name: postinstall.service
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Post Installation
-        After=network-online.target
-        Wants=network-online.target
-
-        [Service]
-        TimeoutStartSec=0
-        User=core
-        RemainAfterExit=yes
-        ExecStart=/bin/bash -c ". /home/core/0_setup.sh"
-
-        [Install]
-        WantedBy=multi-user.target
 storage:
   directories:
     - path: /etc/yum.repos.d # remove this directory
@@ -170,15 +166,6 @@ storage:
     #     inline: |
     #       # This config file enables a /dev/zram0 device with the default settings
     #       [zram0]
-    - path: /home/core/0_setup.sh
-      mode: 0775
-      contents:
-        inline: |
-          #!/bin/bash
-          
-          sudo rpm-ostree install firewalld perl open-vm-tools rke2-selinux
-
-          # sudo reboot
     - path: /home/rancher/1_setup.sh
       mode: 0775
       contents:
