@@ -22,13 +22,8 @@ extensions:
   - name: "perl"
   - name: "open-vm-tools"
   - name: "rke2-selinux"
-  - name: "container-selinux"
-  - name: "iptables"
-  - name: "libnetfilter_conntrack"
-  - name: "libnfnetlink"
-  - name: "libnftnl"
   - name: "policycoreutils-python-utils"
-  - name: "rke2-common"
+  - name: "rke2-common" # not installable with existing rke2 repo
 systemd:
   units:
     - name: podman.service
@@ -57,6 +52,8 @@ systemd:
     - name: NetworkManager-wait-online.service
       enabled: false
       mask: true
+    - name: firewalld.service
+      enabled: true
 storage:
   directories:
     - path: /etc/yum.repos.d # remove this directory
@@ -195,7 +192,7 @@ storage:
           curl -LOJ https://github.com/rancher/rke2-selinux/releases/download/v0.10.testing.1/rke2-selinux-0.10-1.el8.noarch.rpm
 
           # nfs-utils-coreos is already provided -> https://github.com/coreos/fedora-coreos-tracker/issues/572
-          sudo rpm-ostree install firewalld perl perl-core man \
+          sudo rpm-ostree install firewalld perl man \
             open-vm-tools tree git lsscsi rke2-selinux-0.10-1.el8.noarch.rpm
 
           sudo rm -rf ./rke2-selinux-0.10-1.el8.noarch.rpm
@@ -205,8 +202,6 @@ storage:
       contents:
         inline: |
           #!/bin/bash
-
-          sudo systemctl enable firewalld.service
 
           sudo firewall-cmd --permanent --zone=public --add-port=22/tcp
           sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
